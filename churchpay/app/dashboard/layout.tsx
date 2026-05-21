@@ -47,6 +47,17 @@ const NAV_ITEMS = [
     ),
   },
   {
+    href: "/dashboard/cards",
+    label: "Cards & Wallet",
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+        <rect x="1.5" y="3.5" width="15" height="11" rx="2.5" stroke="currentColor" strokeWidth="1.5" fill="none"/>
+        <path d="M1.5 7.5h15" stroke="currentColor" strokeWidth="1.5"/>
+        <rect x="4" y="10.5" width="3" height="1.5" rx="0.75" fill="currentColor"/>
+      </svg>
+    ),
+  },
+  {
     href: "/dashboard/reports",
     label: "Reports",
     icon: (
