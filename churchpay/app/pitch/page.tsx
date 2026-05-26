@@ -172,7 +172,7 @@ function Slide02({ n }: { n: number }) {
             flex: 1, background: "#fff", border: "1px solid rgba(14,15,12,0.12)",
             borderRadius: 16, padding: 32,
           }}>
-            <img src="/obi.jpg" alt="Obi" style={{
+            <img src="/obi.jpeg" alt="Obi" style={{
               width: 96, height: 96, borderRadius: "50%", objectFit: "cover",
               objectPosition: "center top", display: "block",
             }} />
