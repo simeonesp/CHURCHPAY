@@ -146,7 +146,8 @@ function Slide02({ n }: { n: number }) {
             borderRadius: 16, padding: 32,
           }}>
             <img src="/ola.jpg" alt="Olayinka Akinhanmi" style={{
-              width: 72, height: 72, borderRadius: "50%", objectFit: "cover", display: "block",
+              width: 96, height: 96, borderRadius: "50%", objectFit: "cover",
+              objectPosition: "center top", display: "block",
             }} />
             <div style={{ fontFamily: "var(--font-geist-sans)", fontWeight: 800, fontSize: 18, color: C.dark, marginTop: 16 }}>
               Olayinka Akinhanmi
@@ -172,7 +173,8 @@ function Slide02({ n }: { n: number }) {
             borderRadius: 16, padding: 32,
           }}>
             <img src="/obi.jpg" alt="Obi" style={{
-              width: 72, height: 72, borderRadius: "50%", objectFit: "cover", display: "block",
+              width: 96, height: 96, borderRadius: "50%", objectFit: "cover",
+              objectPosition: "center top", display: "block",
             }} />
             <div style={{ fontFamily: "var(--font-geist-sans)", fontWeight: 800, fontSize: 18, color: C.dark, marginTop: 16 }}>
               Obi
