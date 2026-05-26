@@ -1404,6 +1404,147 @@ function BigStatSection() {
   );
 }
 
+// ─── 6b. SCAN · GIVE · KEEP ──────────────────────────────────────────────────
+function ScanGiveKeepSection() {
+  const tiles = [
+    {
+      bg: "#E2F6D5",
+      textColor: "#163300",
+      icon: (
+        <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+          <circle cx="22" cy="22" r="14" stroke="#163300" strokeWidth="3.5" fill="none"/>
+          <path d="M32 32L44 44" stroke="#163300" strokeWidth="3.5" strokeLinecap="round"/>
+          <path d="M17 22h10M22 17v10" stroke="#163300" strokeWidth="2.5" strokeLinecap="round"/>
+        </svg>
+      ),
+      heading: "SCAN",
+      body: "Type a 5-character code or scan the QR code on screen. No menus to dig through — just your church, ministry or cause.",
+    },
+    {
+      bg: "#163300",
+      textColor: "#E2F6D5",
+      icon: (
+        <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+          <rect x="6" y="14" width="40" height="26" rx="5" stroke="#E2F6D5" strokeWidth="3" fill="none"/>
+          <path d="M6 22h40" stroke="#E2F6D5" strokeWidth="3"/>
+          <rect x="12" y="30" width="10" height="4" rx="2" fill="#E2F6D5"/>
+          <circle cx="38" cy="32" r="3" fill="#E2F6D5"/>
+        </svg>
+      ),
+      heading: "GIVE",
+      body: "Choose an amount in your currency. Tithe, offering, building fund, missions — give to exactly the right place. See the rate before you confirm.",
+    },
+    {
+      bg: "#FFC091",
+      textColor: "#0E0F0C",
+      icon: (
+        <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+          <rect x="12" y="6" width="28" height="40" rx="4" stroke="#0E0F0C" strokeWidth="3" fill="none"/>
+          <path d="M19 18h14M19 25h14M19 32h9" stroke="#0E0F0C" strokeWidth="2.5" strokeLinecap="round"/>
+          <path d="M32 36l3 3 5-5" stroke="#0E0F0C" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      ),
+      heading: "KEEP",
+      body: "Get an instant, currency-correct receipt. Download or export your full giving statement any time — audit-ready from day one.",
+    },
+  ];
+
+  return (
+    <section style={{ backgroundColor: C.canvas, padding: "100px 40px" }}>
+      <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+        {/* Label */}
+        <div
+          style={{
+            fontSize: 12,
+            fontWeight: 700,
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
+            color: C.evergreen,
+            fontFamily: "var(--font-geist-sans)",
+            marginBottom: 20,
+          }}
+        >
+          HOW GIVING WORKS ON CHURCHPAY
+        </div>
+
+        {/* Heading */}
+        <div
+          style={{
+            fontSize: "clamp(40px, 6vw, 72px)",
+            fontWeight: 900,
+            lineHeight: 0.92,
+            letterSpacing: "-0.03em",
+            color: C.dark,
+            fontFamily: "var(--font-geist-sans)",
+            marginBottom: 56,
+            maxWidth: 800,
+          }}
+        >
+          SCAN IT. GIVE IT.
+          <br />
+          KEEP THE RECORD.
+        </div>
+
+        {/* Tiles */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gap: 20,
+          }}
+        >
+          {tiles.map((tile) => (
+            <div
+              key={tile.heading}
+              style={{
+                backgroundColor: tile.bg,
+                borderRadius: 24,
+                padding: "40px 36px 40px",
+                display: "flex",
+                flexDirection: "column",
+                minHeight: 340,
+              }}
+            >
+              {/* Icon top */}
+              <div style={{ marginBottom: "auto", paddingBottom: 40 }}>
+                {tile.icon}
+              </div>
+
+              {/* Heading */}
+              <div
+                style={{
+                  fontSize: 22,
+                  fontWeight: 900,
+                  letterSpacing: "-0.02em",
+                  color: tile.textColor,
+                  fontFamily: "var(--font-geist-sans)",
+                  marginBottom: 12,
+                }}
+              >
+                {tile.heading}
+              </div>
+
+              {/* Body */}
+              <div
+                style={{
+                  fontSize: 15,
+                  fontWeight: 600,
+                  lineHeight: 1.55,
+                  color: tile.textColor,
+                  opacity: 0.8,
+                  fontFamily: "var(--font-geist-sans)",
+                }}
+              >
+                {tile.body}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ─── Giver phone mockup ───────────────────────────────────────────────────────
 function GiverPhone() {
   return (
@@ -2020,6 +2161,7 @@ export default function LandingPage() {
       <HowItWorksSection />
       <EnablesSection />
       <BigStatSection />
+      <ScanGiveKeepSection />
       <CongregationSection />
       <SecuritySection />
       <CTABanner />
