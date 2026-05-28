@@ -250,73 +250,107 @@ function Slide({ active, direction, children, bg }: {
 // ─── SLIDE 1 — TITLE ─────────────────────────────────────────────────────────
 function Slide1() {
   return (
-    <>
-      {/* BG glow */}
+    <div style={{ width: "100%", height: "100vh", display: "flex", overflow: "hidden" }}>
+      {/* Left zone — 55% */}
       <div style={{
-        position: "absolute", inset: 0,
-        background: "radial-gradient(ellipse 60% 50% at 50% 55%, rgba(226,246,213,0.05) 0%, transparent 70%)",
-        pointerEvents: "none",
-      }} />
-
-      {/* Content */}
-      <div style={{
-        display: "flex", flexDirection: "column", alignItems: "center",
-        paddingTop: 80, height: "100vh", position: "relative",
+        width: "55%", height: "100vh", padding: 80,
+        display: "flex", flexDirection: "column", justifyContent: "space-between",
       }}>
         {/* Logo */}
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
-          <Logo size={44} textSize={20} textColor={C.mint} gap={12} />
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <div style={{
-            background: "rgba(226,246,213,0.1)", border: "1px solid rgba(226,246,213,0.2)",
-            color: C.mint, opacity: 0.6, borderRadius: 999, padding: "6px 16px",
-            fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", marginTop: 8,
+            width: 36, height: 36, borderRadius: "50%", background: C.mint,
+            display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
           }}>
-            GLOBAL CHURCH FINANCE
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M4 12L12 4M12 4H6M12 4V10" stroke={C.evergreen} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
           </div>
+          <span style={{ fontFamily: "var(--font-geist-sans)", fontWeight: 800, fontSize: 17, color: C.mint, letterSpacing: "-0.02em" }}>
+            ChurchPay
+          </span>
         </div>
 
-        {/* Hero text */}
-        <div style={{ marginTop: 64, textAlign: "center", padding: "0 40px" }}>
+        {/* Middle — headline block */}
+        <div>
           <div style={{
-            fontSize: "clamp(80px,12vw,140px)", fontWeight: 900, color: C.mint,
-            lineHeight: 0.85, letterSpacing: "-0.04em",
+            fontFamily: "var(--font-geist-sans)", fontSize: 11, fontWeight: 700,
+            color: C.mint, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 24,
+            opacity: 0.6,
           }}>
-            ChurchPay
+            Pre-seed · 2025
+          </div>
+          <h1 style={{
+            fontFamily: "var(--font-geist-sans)", fontWeight: 900,
+            fontSize: "clamp(72px,11vw,130px)", color: C.mint,
+            lineHeight: 0.88, letterSpacing: "-0.04em", margin: 0,
+          }}>
+            CHURCH<br />
+            <span style={{ color: C.celebrate }}>PAY</span>
+          </h1>
+          <div style={{
+            fontFamily: "var(--font-geist-sans)", fontSize: 18, fontWeight: 600,
+            color: "rgba(226,246,213,0.75)", marginTop: 28, letterSpacing: "-0.01em",
+          }}>
+            Financial infrastructure for the global church
           </div>
           <div style={{
-            fontSize: "clamp(18px,2.5vw,28px)", fontWeight: 600,
-            color: "rgba(226,246,213,0.55)", marginTop: 20,
-          }}>
-            Financial infrastructure
-          </div>
-          <div style={{
-            fontSize: "clamp(18px,2.5vw,28px)", fontWeight: 600,
-            color: "rgba(226,246,213,0.55)",
-          }}>
-            for the global church.
-          </div>
-          <div style={{
-            fontSize: "clamp(16px,2vw,22px)", fontWeight: 600,
-            color: "rgba(226,246,213,0.35)", marginTop: 12, fontStyle: "italic",
+            fontFamily: "var(--font-geist-sans)", fontSize: 15, fontWeight: 600,
+            color: "rgba(226,246,213,0.5)", marginTop: 8,
           }}>
             Receive donations from any country, in any currency, in seconds.
           </div>
         </div>
+
+        {/* Bottom — founders */}
+        <div style={{
+          fontFamily: "var(--font-geist-sans)", fontSize: 13, fontWeight: 600,
+          color: "rgba(226,246,213,0.45)",
+        }}>
+          Olayinka Akinhanmi · Obiaka Emeka&nbsp;&nbsp;|&nbsp;&nbsp;hello@churchpay.com
+        </div>
       </div>
 
-      {/* Bottom strip */}
+      {/* Right zone — 45% */}
       <div style={{
-        position: "absolute", bottom: 40, left: 0, right: 0,
-        display: "flex", justifyContent: "space-between", padding: "0 80px",
+        width: "45%", height: "100vh",
+        display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+        position: "relative", overflow: "hidden", padding: 48,
       }}>
-        <span style={{ color: C.mint, opacity: 0.4, fontSize: 13, fontWeight: 600 }}>
-          Olayinka Akinhanmi · Obiaka Emeka
-        </span>
-        <span style={{ color: C.mint, opacity: 0.4, fontSize: 13, fontWeight: 600 }}>
-          hello@churchpay.com · churchpay.com
-        </span>
+        {/* Radial glow */}
+        <div style={{
+          position: "absolute", inset: 0,
+          background: "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(226,246,213,0.08) 0%, transparent 70%)",
+          pointerEvents: "none",
+        }} />
+        {/* Globe */}
+        <GlobeGraphic size={280} />
+        {/* Currency chips */}
+        {[
+          { label: "₦ NGN", style: { top: "22%", left: "4%" } },
+          { label: "£ GBP", style: { top: "18%", right: "8%" } },
+          { label: "KSh KES", style: { bottom: "30%", left: "2%" } },
+          { label: "$ USD", style: { bottom: "28%", right: "6%" } },
+        ].map(({ label, style }) => (
+          <div key={label} style={{
+            position: "absolute", ...style,
+            background: C.mint, color: C.evergreen,
+            fontFamily: "var(--font-geist-sans)", fontWeight: 700, fontSize: 12,
+            borderRadius: 999, padding: "6px 14px", whiteSpace: "nowrap",
+          }}>
+            {label}
+          </div>
+        ))}
+        {/* Slide label */}
+        <div style={{
+          position: "absolute", bottom: 32, right: 40,
+          fontFamily: "var(--font-geist-sans)", fontSize: 11, fontWeight: 700,
+          color: "rgba(226,246,213,0.25)", letterSpacing: "0.08em",
+        }}>
+          01 / 16
+        </div>
       </div>
-    </>
+    </div>
   );
 }
 
