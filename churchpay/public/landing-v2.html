@@ -1,0 +1,1550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChurchPay — One place for your church's money</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream:      #FBFBF9;  /* canvas */
+  --cream-soft: #FFFFFF;  /* pure white card surface */
+  --teal:       #163300;  /* evergreen brand */
+  --teal-dk:    #0d2400;  /* deeper green for hover */
+  --teal-soft:  #E2F6D5;  /* mint surface */
+  --mustard:    #163300;  /* primary action — evergreen */
+  --coral:      #163300;
+  --pink-warm:  #E2F6D5;  /* mint card */
+  --sky:        #FFC091;  /* celebrate — warm accent */
+  --grass:      #E2F6D5;  /* mint card */
+  --ink:        #0E0F0C;  /* near-black */
+  --gray:       #454745;  /* warm dark */
+  --gray-lt:    #868685;  /* gray */
+  --ring:       rgba(14,15,12,0.12);
+  --display: 'Geist', system-ui, sans-serif;
+  --sans: 'Geist', system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* NAV */
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--cream);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 48px;
+  border-bottom: 1px solid rgba(14,15,12,0.06);
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--display); font-size: 18px; font-weight: 800;
+  color: var(--teal); text-decoration: none; letter-spacing: -0.02em;
+}
+.nav-logo-mark {
+  width: 28px; height: 28px;
+  background: var(--teal);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--teal-soft); font-size: 14px;
+}
+.nav-right { display: flex; align-items: center; gap: 32px; }
+.nav-link {
+  font-size: 13px; font-weight: 600; color: var(--gray); text-decoration: none;
+  letter-spacing: 0.02em;
+}
+.nav-cta {
+  font-family: var(--sans); font-size: 13px; font-weight: 700;
+  letter-spacing: 0.03em;
+  background: var(--teal); color: var(--teal-soft);
+  padding: 11px 22px; border-radius: 9999px; border: none; cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s;
+}
+.nav-cta:hover { background: var(--teal-dk); transform: scale(1.04); }
+.nav-cta:active { transform: scale(0.96); }
+
+/* HERO */
+.hero { padding: 40px 48px 60px; }
+.hero-stage {
+  background: var(--teal);
+  border-radius: 30px;
+  padding: 80px 40px 60px;
+  position: relative; min-height: 580px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.hero-h1 {
+  font-family: var(--display); font-size: clamp(56px, 8vw, 112px);
+  font-weight: 900; line-height: 0.95; letter-spacing: -0.04em;
+  color: var(--teal-soft); text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  position: relative; z-index: 2;
+}
+.hero-tag {
+  font-size: 16px; color: rgba(226,246,213,0.8); font-weight: 500;
+  text-align: center; max-width: 540px; line-height: 1.55;
+  margin: 0 auto 48px;
+  position: relative; z-index: 2;
+}
+.hero-tag b { font-weight: 700; color: #E2F6D5; }
+.hero-card-wrap {
+  position: relative; width: 100%; max-width: 760px;
+  display: flex; justify-content: center; align-items: center;
+  min-height: 620px;
+}
+
+/* Phone mockup */
+.hero-phone {
+  position: relative; z-index: 3;
+  width: 300px; height: 615px;
+  background: #0E0F0C;
+  border-radius: 48px;
+  padding: 9px;
+  box-shadow:
+    0 0 0 2.5px #1c1c1c,
+    0 40px 80px rgba(0,0,0,0.45),
+    0 12px 32px rgba(0,0,0,0.3),
+    inset 0 0 0 1px rgba(255,255,255,0.06);
+}
+.hero-phone-screen {
+  width: 100%; height: 100%;
+  background: #FAFAF7;
+  border-radius: 40px;
+  overflow: hidden;
+  position: relative;
+  display: flex; flex-direction: column;
+}
+.phone-notch {
+  position: absolute; top: 11px; left: 50%; transform: translateX(-50%);
+  width: 100px; height: 30px;
+  background: #0E0F0C;
+  border-radius: 9999px;
+  z-index: 10;
+}
+
+/* Status bar */
+.phone-status {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 18px 26px 0;
+  font-family: var(--sans); font-size: 14px; font-weight: 700;
+  color: #0E0F0C;
+  height: 52px;
+  position: relative; z-index: 6;
+}
+.phone-status-icons {
+  display: flex; align-items: center; gap: 6px;
+}
+.phone-status-icons svg { display: block; }
+
+/* Tabs */
+.phone-tabs {
+  display: flex; gap: 22px;
+  padding: 10px 24px 16px;
+  font-family: var(--sans); font-size: 13.5px; font-weight: 700;
+  color: var(--gray-lt);
+  align-items: center;
+}
+.phone-tab.active {
+  color: var(--ink);
+  position: relative;
+}
+.phone-tab.active::after {
+  content: ''; position: absolute;
+  left: 50%; bottom: -6px; transform: translateX(-50%);
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--teal);
+}
+
+/* Top dark pill card */
+.phone-card-top {
+  margin: 0 14px 14px;
+  background: #0E0F0C;
+  border-radius: 18px;
+  padding: 12px 12px 12px 12px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: relative; overflow: hidden;
+}
+.phone-card-top::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at 80% 50%, rgba(226,246,213,0.15) 0%, transparent 60%);
+  z-index: 0; pointer-events: none;
+}
+.phone-card-top > * { position: relative; z-index: 1; }
+.phone-card-pill {
+  background: var(--teal-soft); color: var(--teal);
+  font-family: var(--sans); font-size: 11px; font-weight: 700;
+  letter-spacing: 0;
+  padding: 6px 11px 6px 9px; border-radius: 9999px;
+  display: flex; align-items: center; gap: 5px;
+}
+.phone-card-pill-ico {
+  width: 14px; height: 10px;
+  background: var(--teal);
+  border-radius: 2px;
+  position: relative;
+}
+.phone-card-pill-ico::after {
+  content: ''; position: absolute;
+  top: 2.5px; left: 50%; transform: translateX(-50%);
+  width: 5px; height: 5px; background: var(--teal-soft);
+  border-radius: 50%;
+}
+.phone-card-handle {
+  font-family: var(--display); font-size: 15px; font-weight: 700; color: #fff;
+  letter-spacing: -0.01em;
+}
+
+/* Balance card */
+.phone-balance-card {
+  margin: 0 14px 12px;
+  background: #fff;
+  border-radius: 22px;
+  padding: 18px 18px 18px;
+  box-shadow: 0 0 0 1px rgba(14,15,12,0.06);
+  position: relative;
+}
+.phone-balance-row {
+  display: flex; align-items: center; gap: 6px;
+  font-family: var(--sans); font-size: 12.5px; font-weight: 700;
+  color: var(--ink); margin-bottom: 6px;
+}
+.phone-balance-row .dot-i {
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--teal-soft);
+  display: flex; align-items: center; justify-content: center;
+}
+.phone-balance-row .dot-i svg { display: block; }
+.phone-balance-amt {
+  font-family: var(--display); font-size: 38px; font-weight: 800;
+  color: var(--ink); line-height: 1; letter-spacing: -0.03em;
+  margin-bottom: 8px;
+}
+.phone-balance-amt .cents { font-size: 19px; color: var(--gray); font-weight: 700; }
+.phone-balance-amt .unit { font-size: 19px; color: var(--gray-lt); font-weight: 700; letter-spacing: 0; }
+.phone-balance-sub {
+  font-size: 11px; color: var(--gray-lt);
+  display: flex; align-items: center; gap: 5px;
+}
+.phone-balance-sub .glock {
+  display: flex; align-items: center; justify-content: center;
+  width: 11px; height: 11px;
+  color: var(--gray-lt);
+}
+.phone-trend-badge {
+  position: absolute; top: 14px; right: 14px;
+  background: var(--teal-soft);
+  border-radius: 8px;
+  padding: 7px 9px;
+  text-align: left;
+  font-family: var(--sans); font-size: 9px; font-weight: 700; color: var(--teal);
+  line-height: 1.2;
+  display: flex; align-items: center; gap: 5px;
+}
+.phone-trend-badge .arrow {
+  font-size: 11px; line-height: 1;
+}
+.phone-trend-badge b {
+  font-size: 12px; font-weight: 800;
+}
+
+/* Action pills */
+.phone-actions {
+  display: flex; gap: 8px;
+  padding: 0 14px 12px;
+}
+.phone-action {
+  flex: 1;
+  background: #fff;
+  border-radius: 9999px;
+  padding: 12px 0;
+  text-align: center;
+  font-family: var(--sans); font-size: 12.5px; font-weight: 700;
+  color: var(--ink);
+  box-shadow: 0 0 0 1px rgba(14,15,12,0.06);
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.phone-action svg { display: block; }
+
+/* Fund row */
+.phone-portfolio {
+  margin: 0 14px 10px;
+  background: #fff;
+  border-radius: 18px;
+  padding: 12px 14px 12px 16px;
+  display: flex; align-items: center; justify-content: space-between;
+  box-shadow: 0 0 0 1px rgba(14,15,12,0.06);
+}
+.phone-portfolio-label {
+  font-size: 10.5px; color: var(--gray-lt); font-weight: 600;
+  margin-bottom: 1px; letter-spacing: 0.01em;
+}
+.phone-portfolio-amt {
+  font-family: var(--display); font-size: 19px; font-weight: 800;
+  color: var(--ink); letter-spacing: -0.02em;
+}
+.phone-trade-btn {
+  background: var(--teal); color: var(--teal-soft);
+  font-family: var(--sans); font-size: 11.5px; font-weight: 700;
+  padding: 8px 14px; border-radius: 9999px;
+  box-shadow: 0 4px 12px rgba(22,51,0,0.25);
+  display: inline-flex; align-items: center; gap: 4px;
+}
+
+/* More for you label */
+.phone-more {
+  padding: 6px 18px 8px;
+  font-family: var(--sans); font-size: 11px; font-weight: 700; color: var(--ink);
+  letter-spacing: 0.01em;
+}
+
+/* Promo card */
+.phone-promo {
+  margin: 0 14px 0;
+  background: #0E0F0C;
+  border-radius: 18px;
+  padding: 12px 14px;
+  position: relative; overflow: hidden;
+  flex: 1;
+  min-height: 90px;
+}
+.phone-promo-row {
+  display: flex; align-items: center; justify-content: space-between;
+  position: relative; z-index: 2;
+}
+.phone-promo-text {}
+.phone-promo-label {
+  font-size: 9px; color: rgba(255,255,255,0.55);
+  font-weight: 700; margin-bottom: 4px;
+  letter-spacing: 0.05em; text-transform: uppercase;
+}
+.phone-promo-title {
+  font-family: var(--display); font-size: 15px; font-weight: 700;
+  color: #fff; line-height: 1.15; letter-spacing: -0.01em;
+}
+.phone-promo-card-mini {
+  width: 50px; height: 32px;
+  background: linear-gradient(135deg, #163300 0%, #3a7a00 100%);
+  border-radius: 5px;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(22,51,0,0.4);
+  flex-shrink: 0;
+}
+.phone-promo-card-mini::before {
+  content: ''; position: absolute;
+  top: 5px; left: 5px;
+  width: 9px; height: 7px;
+  background: rgba(226,246,213,0.5);
+  border-radius: 1.5px;
+}
+.phone-promo-card-mini::after {
+  content: 'CP'; position: absolute;
+  bottom: 4px; right: 5px;
+  font-family: var(--display); font-size: 8px; font-weight: 800;
+  color: #E2F6D5;
+}
+.phone-promo-glow {
+  position: absolute; right: -20px; bottom: -20px;
+  width: 100px; height: 100px;
+  background: radial-gradient(circle, rgba(226,246,213,0.12) 0%, transparent 60%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Dock */
+.phone-dock {
+  background: #fff;
+  border-top: 1px solid rgba(14,15,12,0.05);
+  padding: 10px 26px 14px;
+  margin-top: 10px;
+  display: flex; justify-content: space-between; align-items: flex-end;
+}
+.phone-dock-item {
+  font-family: var(--sans); font-size: 9.5px; font-weight: 700;
+  color: var(--gray-lt);
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  flex: 1;
+}
+.phone-dock-item.center {
+  flex: 0 0 auto;
+  width: 46px; height: 46px;
+  background: var(--teal);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: -14px 0 0;
+  box-shadow: 0 6px 16px rgba(22,51,0,0.4),
+              0 0 0 4px #fff;
+  position: relative;
+}
+.phone-dock-item.center::before {
+  content: ''; position: absolute;
+  width: 22px; height: 22px;
+  border: 2.5px solid #E2F6D5;
+  border-radius: 50%;
+}
+.phone-dock-item.center::after {
+  content: ''; position: absolute;
+  width: 8px; height: 8px;
+  background: #E2F6D5;
+  border-radius: 50%;
+}
+.phone-dock-ico {
+  width: 20px; height: 20px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gray-lt);
+}
+.phone-dock-item.active .phone-dock-ico { color: var(--ink); }
+.phone-dock-item.active { color: var(--ink); }
+.hero-pill {
+  position: absolute;
+  background: white; border-radius: 9999px;
+  padding: 8px 14px;
+  display: flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 500; color: var(--ink);
+  box-shadow: 0 8px 24px rgba(14,15,12,0.2), 0 0 0 1px rgba(14,15,12,0.06);
+  white-space: nowrap;
+  z-index: 5;
+  animation: floatPill 5s ease-in-out infinite;
+}
+@keyframes floatPill {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.hero-pill-av {
+  width: 20px; height: 20px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 9px; font-weight: 700;
+}
+.hero-pill .pos { color: #163300; font-weight: 700; }
+.hero-pill .neg { color: #d03238; font-weight: 700; }
+.hero-pill-1 { top: 16%; left: 8%; animation-delay: 0s; }
+.hero-pill-2 { top: 54%; left: 6%; animation-delay: 1s; }
+.hero-pill-3 { top: 22%; right: 8%; animation-delay: 2s; }
+.hero-pill-4 { top: 62%; right: 6%; animation-delay: 0.5s; }
+.hero-disclaimer {
+  text-align: center; font-size: 11px; color: rgba(226,246,213,0.5);
+  margin-top: 24px; padding: 0 20px;
+}
+
+/* ─── REASONS ─── */
+.reasons-sec { padding: 80px 0 60px; }
+.reasons-h2 {
+  font-family: var(--display); font-size: clamp(40px, 5vw, 64px);
+  font-weight: 900; letter-spacing: -0.03em; color: var(--teal);
+  text-align: center; text-transform: uppercase; margin-bottom: 12px;
+}
+.reasons-sub {
+  text-align: center; font-size: 15px; color: var(--gray);
+  margin-bottom: 48px; font-weight: 500;
+}
+.ways-track-wrap { overflow: hidden; padding: 0 40px; }
+.ways-track {
+  display: flex; gap: 14px;
+  animation: marqueeWays 50s linear infinite;
+  width: max-content;
+}
+@keyframes marqueeWays {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.way-card {
+  flex-shrink: 0;
+  width: 220px; height: 320px;
+  border-radius: 30px;
+  overflow: hidden;
+  position: relative;
+  background-size: cover; background-position: center;
+  box-shadow: 0 0 0 1px var(--ring);
+}
+.way-card::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.0) 30%, rgba(0,0,0,0.6) 100%);
+}
+.way-card-content {
+  position: absolute; inset: 0;
+  padding: 20px 18px;
+  color: white; z-index: 2;
+}
+.way-card-name {
+  font-family: var(--display); font-size: 18px; font-weight: 800;
+  line-height: 1.1; margin-bottom: 4px;
+}
+.way-card-desc {
+  font-size: 12px; opacity: 0.9; line-height: 1.4; max-width: 160px; font-weight: 500;
+}
+.way-card-amount {
+  position: absolute; left: 18px; bottom: 50px;
+  font-family: var(--display); font-size: 36px; font-weight: 800;
+  letter-spacing: -0.02em; line-height: 1; color: white;
+  z-index: 2;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+.way-card-pooled {
+  position: absolute; left: 18px; bottom: 30px;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: white; opacity: 0.85; z-index: 2;
+}
+
+/* ─── DEDICATED PLACE ─── */
+.dedi-sec { padding: 80px 48px; }
+.dedi-h2 {
+  font-family: var(--display); font-size: clamp(36px, 5vw, 56px);
+  font-weight: 900; letter-spacing: -0.03em; color: var(--teal);
+  text-align: center; text-transform: uppercase;
+  margin-bottom: 16px; line-height: 1;
+}
+.dedi-sub {
+  text-align: center; font-size: 15px; color: var(--gray);
+  max-width: 520px; margin: 0 auto 56px;
+  line-height: 1.6; font-weight: 500;
+}
+.dedi-layout {
+  display: grid; grid-template-columns: 320px 1fr; gap: 16px;
+  max-width: 1200px; margin: 0 auto;
+}
+.dedi-panel {
+  background: var(--teal);
+  border-radius: 30px;
+  padding: 40px 36px;
+  color: var(--teal-soft);
+  display: flex; flex-direction: column; justify-content: space-between;
+  min-height: 360px;
+}
+.dedi-panel-words {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.dedi-panel-word {
+  font-family: var(--display); font-size: 32px; font-weight: 900;
+  letter-spacing: -0.02em; line-height: 1; text-transform: uppercase;
+  transition: opacity 0.3s, color 0.3s;
+  color: var(--teal-soft);
+  opacity: 0.35;
+}
+.dedi-panel-word.active { color: #FFC091; opacity: 1; }
+.dedi-panel-desc {
+  font-size: 13px; line-height: 1.6; opacity: 0.7;
+  margin-top: 32px; font-weight: 500;
+}
+.dedi-screen {
+  background: white;
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px var(--ring);
+}
+.dedi-screen-bar {
+  background: var(--cream);
+  padding: 12px 20px;
+  display: flex; align-items: center; gap: 8px;
+}
+.dedi-screen-dot { width: 10px; height: 10px; border-radius: 50%; background: #D8DCD3; }
+.dedi-screen-url {
+  font-family: var(--sans); font-size: 11px;
+  color: var(--gray-lt); margin-left: 16px; font-weight: 500;
+}
+.dedi-screen-body { padding: 32px; }
+.dedi-screen-head {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  margin-bottom: 8px;
+}
+.dedi-screen-title {
+  font-family: var(--display); font-size: 22px; font-weight: 800;
+  color: var(--teal); letter-spacing: -0.01em;
+}
+.dedi-screen-subtitle {
+  font-size: 12px; color: var(--gray-lt); margin-top: 4px; font-weight: 500;
+}
+.dedi-screen-amt {
+  font-family: var(--display); font-size: 32px; font-weight: 800;
+  color: var(--teal); letter-spacing: -0.02em; line-height: 1;
+}
+.dedi-screen-buttons {
+  display: flex; gap: 8px; margin-top: 20px; margin-bottom: 24px;
+}
+.dedi-btn {
+  font-family: var(--sans); font-size: 12px; font-weight: 700;
+  padding: 9px 18px; border-radius: 9999px; border: none; cursor: pointer;
+  letter-spacing: 0.02em;
+  transition: transform 0.15s ease, background 0.15s;
+}
+.dedi-btn:hover { transform: scale(1.04); }
+.dedi-btn:active { transform: scale(0.96); }
+.dedi-btn-primary { background: var(--teal); color: var(--teal-soft); }
+.dedi-btn-primary:hover { background: var(--teal-dk); }
+.dedi-btn-ghost { background: rgba(22,51,0,0.07); color: var(--teal); border: none; font-weight: 600; }
+.dedi-tx-label {
+  font-size: 11px; font-weight: 700; color: var(--gray-lt);
+  letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px;
+}
+.dedi-tx-row {
+  display: grid; grid-template-columns: 60px 1fr 40px 1fr 90px;
+  align-items: center; gap: 14px;
+  padding: 11px 0;
+  border-top: 1px solid rgba(0,0,0,0.06);
+  font-size: 12px;
+}
+.dedi-tx-date { color: var(--gray-lt); font-weight: 500; }
+.dedi-tx-from { color: var(--ink); font-weight: 500; }
+.dedi-tx-from b { font-weight: 700; }
+.dedi-tx-icon { color: var(--gray-lt); text-align: center; }
+.dedi-tx-amt { font-weight: 700; color: var(--ink); text-align: right; }
+.dedi-tx-status { color: var(--gray-lt); text-align: right; font-size: 11px; font-weight: 600; }
+.dedi-tx-status.done { color: #163300; }
+.dedi-tx-status.pending { color: #B68A1D; }
+
+/* ─── SPEND ─── */
+.spend-sec { padding: 80px 48px; }
+.spend-layout {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+  max-width: 1200px; margin: 0 auto; align-items: center;
+}
+.spend-h2 {
+  font-family: var(--display); font-size: clamp(32px, 4vw, 48px);
+  font-weight: 900; letter-spacing: -0.03em; color: var(--teal);
+  text-transform: uppercase; line-height: 1; margin-bottom: 24px;
+}
+.spend-body { font-size: 14px; line-height: 1.7; color: var(--gray); margin-bottom: 16px; max-width: 380px; font-weight: 500; }
+.spend-fine { font-size: 12px; color: var(--gray-lt); font-weight: 500; }
+.spend-card {
+  background: var(--cream-soft);
+  border-radius: 30px;
+  padding: 32px;
+  box-shadow: 0 0 0 1px var(--ring);
+}
+.spend-card-head {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  margin-bottom: 20px;
+}
+.spend-card-label {
+  font-size: 12px; color: var(--gray-lt); font-weight: 600; margin-bottom: 2px;
+  letter-spacing: 0.02em; text-transform: uppercase;
+}
+.spend-card-bal {
+  font-family: var(--display); font-size: 32px; font-weight: 800;
+  color: var(--teal); letter-spacing: -0.02em; line-height: 1;
+}
+.spend-rows { margin-bottom: 28px; }
+.spend-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 0;
+  font-size: 13px;
+  border-top: 1px solid rgba(0,0,0,0.06);
+}
+.spend-row-av {
+  width: 26px; height: 26px; border-radius: 50%;
+  background-size: cover;
+}
+.spend-row-name {
+  flex: 1; font-weight: 600; letter-spacing: 0.03em;
+  text-transform: uppercase; font-size: 11px; color: var(--teal);
+}
+.spend-row-amt { font-weight: 700; color: var(--ink); }
+.spend-row-amt.neg { color: #d03238; }
+.spend-card-visa {
+  background: var(--teal);
+  border-radius: 20px;
+  padding: 28px 24px;
+  color: var(--teal-soft);
+  height: 180px;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.spend-card-visa-logo {
+  font-family: var(--display); font-size: 18px; font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.spend-card-chip {
+  width: 36px; height: 28px;
+  background: #FFC091;
+  border-radius: 4px;
+}
+.spend-card-visa-bot {
+  display: flex; justify-content: space-between; align-items: flex-end;
+}
+.spend-card-brand {
+  font-style: italic; font-weight: 800; font-size: 22px;
+  letter-spacing: -0.01em; opacity: 0.9;
+}
+
+/* ─── BUILT IN ─── */
+.built-sec { padding: 80px 48px; }
+.built-h2 {
+  font-family: var(--display); font-size: clamp(36px, 5vw, 56px);
+  font-weight: 900; letter-spacing: -0.03em; color: var(--teal);
+  text-align: center; text-transform: uppercase;
+  margin-bottom: 16px; line-height: 1;
+}
+.built-sub {
+  text-align: center; font-size: 15px; color: var(--gray);
+  max-width: 520px; margin: 0 auto 56px; line-height: 1.6; font-weight: 500;
+}
+.built-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  max-width: 1200px; margin: 0 auto;
+}
+.built-card {
+  background: white;
+  border-radius: 30px;
+  padding: 36px 32px;
+  position: relative; overflow: hidden;
+  min-height: 280px;
+  display: flex; flex-direction: column;
+  box-shadow: 0 0 0 1px var(--ring);
+  transition: transform 0.15s ease;
+}
+.built-card:hover { transform: translateY(-4px); }
+.built-card-img {
+  width: 60px; height: 60px; border-radius: 9999px;
+  background-size: cover; background-position: center;
+  margin-bottom: 24px;
+}
+.built-card-h3 {
+  font-family: var(--display); font-size: 24px; font-weight: 800;
+  color: var(--teal); letter-spacing: -0.02em; margin-bottom: 10px;
+  text-transform: uppercase; line-height: 1.05;
+}
+.built-card-p {
+  font-size: 13px; line-height: 1.65; color: var(--gray); font-weight: 500;
+}
+.built-card.dark { background: var(--teal); color: var(--teal-soft); box-shadow: none; }
+.built-card.dark .built-card-h3 { color: #E2F6D5; }
+.built-card.dark .built-card-p { color: rgba(226,246,213,0.7); }
+.built-card.cream { background: var(--cream); }
+.built-card.cream .built-card-h3 { color: var(--teal); }
+.built-card.grass { background: var(--grass); box-shadow: 0 0 0 1px rgba(14,15,12,0.06); }
+.built-card.grass .built-card-h3 { color: var(--teal); }
+.built-card.grass .built-card-p { color: var(--teal); opacity: 0.75; }
+.built-card.sky { background: var(--teal-soft); box-shadow: 0 0 0 1px rgba(14,15,12,0.06); }
+.built-card.sky .built-card-h3 { color: var(--teal); }
+.built-card.mustard { background: var(--sky); box-shadow: 0 0 0 1px rgba(14,15,12,0.06); }
+.built-card.mustard .built-card-h3 { color: var(--ink); }
+.built-card.mustard .built-card-p { color: rgba(14,15,12,0.7); }
+
+/* ─── SAFETY ─── */
+.safety-sec { padding: 80px 48px; }
+.safety-layout {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+  max-width: 1200px; margin: 0 auto; align-items: center;
+}
+.safety-h2 {
+  font-family: var(--display); font-size: clamp(32px, 4vw, 48px);
+  font-weight: 900; letter-spacing: -0.03em; color: var(--teal);
+  text-transform: uppercase; line-height: 1; margin-bottom: 24px;
+}
+.safety-body { font-size: 14px; line-height: 1.7; color: var(--gray); margin-bottom: 14px; max-width: 380px; font-weight: 500; }
+.safety-visual {
+  background: var(--teal-soft);
+  border-radius: 30px;
+  padding: 36px;
+  position: relative; height: 380px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(14,15,12,0.08);
+}
+.safety-mark {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 80px; height: 80px; border-radius: 9999px;
+  background: var(--teal);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 8px 24px rgba(22,51,0,0.25);
+  font-size: 32px;
+  color: var(--teal-soft);
+}
+.safety-pill {
+  position: absolute;
+  background: white; border-radius: 9999px;
+  padding: 8px 14px;
+  display: flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 500;
+  box-shadow: 0 0 0 1px var(--ring);
+  white-space: nowrap;
+}
+.safety-pill .neg { color: #d03238; font-weight: 700; }
+.safety-pill .pos { color: #163300; font-weight: 700; }
+.safety-pill-av {
+  width: 18px; height: 18px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 8px; font-weight: 700;
+}
+.safety-pill-1 { top: 14%; left: 14%; }
+.safety-pill-2 { top: 32%; left: 8%; }
+.safety-pill-3 { top: 56%; left: 14%; }
+.safety-pill-4 { top: 12%; right: 10%; }
+.safety-pill-5 { top: 36%; right: 6%; }
+.safety-pill-6 { top: 64%; right: 12%; }
+
+/* ─── BIG CTA ─── */
+.cta-big {
+  background: var(--teal);
+  margin: 0 48px;
+  border-radius: 40px;
+  padding: 80px 40px;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.cta-icons {
+  display: flex; justify-content: center; align-items: center; gap: 24px;
+  margin-bottom: 32px;
+}
+.cta-icon-circle {
+  width: 56px; height: 56px; border-radius: 50%;
+  background-size: cover; background-position: center;
+  box-shadow: 0 0 0 3px rgba(226,246,213,0.3);
+}
+.cta-h2 {
+  font-family: var(--display); font-size: clamp(40px, 6vw, 80px);
+  font-weight: 900; letter-spacing: -0.03em; color: var(--teal-soft);
+  text-transform: uppercase; line-height: 0.95;
+  margin-bottom: 16px;
+}
+.cta-sub {
+  font-size: 14px; color: rgba(226,246,213,0.65);
+  max-width: 420px; margin: 0 auto 32px;
+  line-height: 1.6; font-weight: 500;
+}
+.cta-btn {
+  background: #E2F6D5; color: var(--teal);
+  font-family: var(--sans); font-size: 13px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 14px 32px; border-radius: 9999px; border: none; cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s;
+}
+.cta-btn:hover { background: #d0f0c0; transform: scale(1.04); }
+.cta-btn:active { transform: scale(0.96); }
+
+/* ─── FAQ ─── */
+.faq-sec { padding: 80px 48px; }
+.faq-layout {
+  display: grid; grid-template-columns: 280px 1fr; gap: 80px;
+  max-width: 1200px; margin: 0 auto;
+}
+.faq-h2 {
+  font-family: var(--display); font-size: clamp(28px, 3vw, 36px);
+  font-weight: 900; letter-spacing: -0.02em; color: var(--teal);
+  text-transform: uppercase; line-height: 1;
+}
+.faq-item {
+  border-top: 1px solid rgba(0,0,0,0.08);
+  padding: 18px 0;
+  cursor: pointer;
+}
+.faq-item:last-child { border-bottom: 1px solid rgba(0,0,0,0.08); }
+.faq-q {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 14px; font-weight: 600; color: var(--teal);
+}
+.faq-q-plus {
+  font-size: 18px; font-weight: 300; color: var(--teal);
+  transition: transform 0.3s;
+  flex-shrink: 0; margin-left: 16px;
+}
+.faq-item.open .faq-q-plus { transform: rotate(45deg); }
+.faq-a {
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.3s ease, padding-top 0.3s ease;
+  font-size: 13px; line-height: 1.65; color: var(--gray); font-weight: 500;
+}
+.faq-item.open .faq-a { max-height: 220px; padding-top: 12px; }
+
+/* ─── FOOTER ─── */
+.footer {
+  background: var(--teal);
+  padding: 80px 48px 32px;
+  position: relative; overflow: hidden;
+}
+.footer-wordmark {
+  font-family: var(--display); font-size: clamp(80px, 14vw, 200px);
+  font-weight: 900; letter-spacing: -0.04em;
+  color: transparent; -webkit-text-stroke: 1px rgba(226,246,213,0.12);
+  line-height: 0.9; overflow: hidden; white-space: nowrap;
+  margin-bottom: 56px;
+  user-select: none;
+  text-transform: uppercase;
+}
+.footer-top {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 56px; padding-bottom: 40px;
+}
+.footer-brand-icon {
+  width: 36px; height: 36px;
+  background: var(--teal-soft); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 16px;
+  font-family: var(--display); font-size: 18px; font-weight: 800; color: var(--teal);
+}
+.footer-cols {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+}
+.footer-col-head {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: rgba(226,246,213,0.45); margin-bottom: 16px;
+}
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-links a {
+  font-size: 13px; color: rgba(226,246,213,0.8); text-decoration: none;
+  letter-spacing: 0.03em; transition: opacity 0.2s;
+  text-transform: uppercase; font-weight: 600;
+}
+.footer-links a:hover { opacity: 0.6; }
+.footer-bot {
+  border-top: 1px solid rgba(226,246,213,0.12);
+  padding-top: 24px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 11px; color: rgba(226,246,213,0.4);
+  letter-spacing: 0.04em; font-weight: 500;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .nav { padding: 16px 20px; }
+  .nav-right { gap: 14px; }
+  .nav-link { display: none; }
+  .hero { padding: 20px 16px 40px; }
+  .hero-stage { padding: 56px 20px; min-height: 520px; }
+  .hero-pill { font-size: 10px; padding: 6px 10px; }
+  .hero-pill-1, .hero-pill-2 { left: 0; }
+  .hero-pill-3, .hero-pill-4 { right: 0; }
+  .ways-track-wrap { padding: 0 16px; }
+  .way-card { width: 180px; height: 260px; }
+  .dedi-sec, .spend-sec, .built-sec, .safety-sec, .faq-sec { padding: 56px 20px; }
+  .dedi-layout, .spend-layout, .safety-layout, .faq-layout { grid-template-columns: 1fr; gap: 32px; }
+  .dedi-tx-row { grid-template-columns: 50px 1fr 70px; }
+  .dedi-tx-icon, .dedi-tx-status { display: none; }
+  .built-grid { grid-template-columns: 1fr; }
+  .cta-big { margin: 0 16px; padding: 56px 20px; }
+  .footer { padding: 56px 20px 24px; }
+  .footer-top { grid-template-columns: 1fr; gap: 32px; }
+  .footer-bot { flex-direction: column; gap: 12px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-mark">✦</div>
+    ChurchPay
+  </a>
+  <div class="nav-right">
+    <a href="#" class="nav-link">Sign in</a>
+    <button class="nav-cta">Get early access</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-stage">
+    <h1 class="hero-h1">
+      One home<br>for church money.
+    </h1>
+    <p class="hero-tag">
+      Collect every gift. Track every fund. Spend together with confidence. <br>
+      <b>The easy way for your church to handle money — from Sunday to Sunday.</b>
+    </p>
+
+    <div class="hero-card-wrap">
+      <div class="hero-pill hero-pill-1">
+        <div class="hero-pill-av" style="background:#163300">AK</div>
+        Amanda gave <span class="pos">+$200.00</span>
+      </div>
+      <div class="hero-pill hero-pill-2">
+        <div class="hero-pill-av" style="background:#E2F6D5; color:#163300">MT</div>
+        Marcus tithed <span class="pos">+$50.00</span>
+      </div>
+      <div class="hero-pill hero-pill-3">
+        <div class="hero-pill-av" style="background:#163300">SR</div>
+        Sarah gave <span class="pos">+$1,000.00</span> to Missions
+      </div>
+      <div class="hero-pill hero-pill-4">
+        <div class="hero-pill-av" style="background:#E2F6D5; color:#163300">PJ</div>
+        Pastor James spent <span class="neg">-$89.97</span> at Office Depot
+      </div>
+
+      <div class="hero-phone">
+        <div class="hero-phone-screen">
+          <div class="phone-notch"></div>
+
+          <div class="phone-status">
+            <span>9:41</span>
+            <div class="phone-status-icons">
+              <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="0.5"/><rect x="4.5" y="5" width="3" height="6" rx="0.5"/><rect x="9" y="2.5" width="3" height="8.5" rx="0.5"/><rect x="13.5" y="0" width="3" height="11" rx="0.5"/></svg>
+              <svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor"><path d="M8 11C9.2 11 10.2 10 10.2 8.8s-1-2.2-2.2-2.2-2.2 1-2.2 2.2S6.8 11 8 11zM3.6 6.4c2.4-2.4 6.4-2.4 8.8 0L14 5C10.7 1.7 5.3 1.7 2 5l1.6 1.4zM.4 3.2C4.6-1 11.4-1 15.6 3.2L17 1.8C12-3.2 4-3.2-1 1.8l1.4 1.4z" transform="translate(-0.5 0)"/></svg>
+              <svg width="25" height="11" viewBox="0 0 25 11" fill="none">
+                <rect x="0.5" y="0.5" width="22" height="10" rx="2.5" stroke="currentColor" stroke-opacity="0.4"/>
+                <rect x="2" y="2" width="16" height="7" rx="1.2" fill="currentColor"/>
+                <rect x="23" y="3.5" width="1.5" height="4" rx="0.5" fill="currentColor" fill-opacity="0.4"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="phone-tabs">
+            <span class="phone-tab active">Home</span>
+            <span class="phone-tab">Giving</span>
+            <span class="phone-tab">Funds</span>
+            <span class="phone-tab">Members</span>
+          </div>
+
+          <div class="phone-card-top">
+            <div class="phone-card-pill">
+              <span class="phone-card-pill-ico"></span>
+              Add card
+            </div>
+            <div class="phone-card-handle">grace.community</div>
+          </div>
+
+          <div class="phone-balance-card">
+            <div class="phone-balance-row">
+              <span class="dot-i">
+                <svg width="6" height="8" viewBox="0 0 6 8" fill="none"><circle cx="3" cy="1.5" r="1" fill="#163300"/><rect x="2" y="3.2" width="2" height="4" rx="0.6" fill="#163300"/></svg>
+              </span>
+              Sunday total
+            </div>
+            <div class="phone-balance-amt">$24,180<span class="cents">.50</span><span class="unit"> USD</span></div>
+            <div class="phone-balance-sub">
+              <span class="glock">
+                <svg width="9" height="11" viewBox="0 0 9 11" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="1" y="5" width="7" height="5.5" rx="0.8"/><path d="M2.5 5V3.2a2 2 0 0 1 4 0V5"/></svg>
+              </span>
+              347 givers this Sunday
+            </div>
+            <div class="phone-trend-badge">
+              <span class="arrow">↗</span>
+              <span><b>+12%</b><br>vs last wk</span>
+            </div>
+          </div>
+
+          <div class="phone-actions">
+            <div class="phone-action">
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6.5 1v11M1 6.5h11"/></svg>
+              Give
+            </div>
+            <div class="phone-action">
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5h9M7 2.5l4 4-4 4"/></svg>
+              Send
+            </div>
+          </div>
+
+          <div class="phone-portfolio">
+            <div>
+              <div class="phone-portfolio-label">Missions Fund</div>
+              <div class="phone-portfolio-amt">$8,567</div>
+            </div>
+            <div class="phone-trade-btn">View →</div>
+          </div>
+
+          <div class="phone-more">More for you</div>
+
+          <div class="phone-promo">
+            <div class="phone-promo-glow"></div>
+            <div class="phone-promo-row">
+              <div class="phone-promo-text">
+                <div class="phone-promo-label">CHURCHPAY CARD</div>
+                <div class="phone-promo-title">Spend right from<br>your church balance</div>
+              </div>
+              <div class="phone-promo-card-mini"></div>
+            </div>
+          </div>
+
+          <div class="phone-dock">
+            <div class="phone-dock-item active">
+              <div class="phone-dock-ico">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8L9 2l7 6v8a1 1 0 0 1-1 1h-3v-5H6v5H3a1 1 0 0 1-1-1V8z" fill="currentColor" fill-opacity="0.12"/></svg>
+              </div>
+              Home
+            </div>
+            <div class="phone-dock-item center"></div>
+            <div class="phone-dock-item">
+              <div class="phone-dock-ico">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="6" height="6" rx="1"/><rect x="10" y="2" width="6" height="6" rx="1"/><rect x="2" y="10" width="6" height="6" rx="1"/><rect x="10" y="10" width="6" height="6" rx="1"/></svg>
+              </div>
+              Funds
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="hero-disclaimer">
+    * ChurchPay is a financial technology company, not a bank. Banking services provided by partner banks, Member FDIC.
+  </p>
+</section>
+
+<!-- REASONS — "Give for a reason" -->
+<section class="reasons-sec">
+  <h2 class="reasons-h2">Give for a reason</h2>
+  <p class="reasons-sub">Every fund. Every cause. Every ministry — in one place.</p>
+
+  <div class="ways-track-wrap">
+    <div class="ways-track">
+      <!-- First set -->
+      <div class="way-card" style="background-image:url('https://images.unsplash.com/photo-1438232992991-995b7058bbb3?w=500&h=700&fit=crop')">
+        <div class="way-card-content">
+          <div class="way-card-name">Sunday Tithes</div>
+          <div class="way-card-desc">The weekly giving heartbeat</div>
+        </div>
+        <div class="way-card-amount">$24,180</div>
+        <div class="way-card-pooled">This Sunday</div>
+      </div>
+
+      <div class="way-card" style="background-image:url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=500&h=700&fit=crop')">
+        <div class="way-card-content">
+          <div class="way-card-name">Missions</div>
+          <div class="way-card-desc">Support our branch in Lagos</div>
+        </div>
+        <div class="way-card-amount">$8,567</div>
+        <div class="way-card-pooled">Raised this month</div>
+      </div>
+
+      <div class="way-card" style="background-image:url('https://images.unsplash.com/photo-1497375638960-ca368c7231e4?w=500&h=700&fit=crop')">
+        <div class="way-card-content">
+          <div class="way-card-name">Youth Camp</div>
+          <div class="way-card-desc">Summer scholarships for teens</div>
+        </div>
+        <div class="way-card-amount">$4,124</div>
+        <div class="way-card-pooled">Of $5K goal</div>
+      </div>
+
+      <div class="way-card" style="background-image:url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=500&h=700&fit=crop')">
+        <div class="way-card-content">
+          <div class="way-card-name">New Roof</div>
+          <div class="way-card-desc">Building fund for repairs</div>
+        </div>
+        <div class="way-card-amount">$2,323</div>
+        <div class="way-card-pooled">Pooled</div>
+      </div>
+
+      <div class="way-card" style="background-image:url('https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=500&h=700&fit=crop')">
+        <div class="way-card-content">
+          <div class="way-card-name">Food Pantry</div>
+          <div class="way-card-desc">Weekly community meals</div>
+        </div>
+        <div class="way-card-amount">$1,890</div>
+        <div class="way-card-pooled">This week</div>
+      </div>
+
+      <div class="way-card" style="background-image:url('https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=500&h=700&fit=crop')">
+        <div class="way-card-content">
+          <div class="way-card-name">Sunday School</div>
+          <div class="way-card-desc">Books, snacks, and crafts</div>
+        </div>
+        <div class="way-card-amount">$845</div>
+        <div class="way-card-pooled">Pooled</div>
+      </div>
+
+      <!-- Duplicate for infinite marquee -->
+      <div class="way-card" style="background-image:url('https://images.unsplash.com/photo-1438232992991-995b7058bbb3?w=500&h=700&fit=crop')">
+        <div class="way-card-content">
+          <div class="way-card-name">Sunday Tithes</div>
+          <div class="way-card-desc">The weekly giving heartbeat</div>
+        </div>
+        <div class="way-card-amount">$24,180</div>
+        <div class="way-card-pooled">This Sunday</div>
+      </div>
+      <div class="way-card" style="background-image:url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=500&h=700&fit=crop')">
+        <div class="way-card-content">
+          <div class="way-card-name">Missions</div>
+          <div class="way-card-desc">Support our branch in Lagos</div>
+        </div>
+        <div class="way-card-amount">$8,567</div>
+        <div class="way-card-pooled">Raised this month</div>
+      </div>
+      <div class="way-card" style="background-image:url('https://images.unsplash.com/photo-1497375638960-ca368c7231e4?w=500&h=700&fit=crop')">
+        <div class="way-card-content">
+          <div class="way-card-name">Youth Camp</div>
+          <div class="way-card-desc">Summer scholarships for teens</div>
+        </div>
+        <div class="way-card-amount">$4,124</div>
+        <div class="way-card-pooled">Of $5K goal</div>
+      </div>
+      <div class="way-card" style="background-image:url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=500&h=700&fit=crop')">
+        <div class="way-card-content">
+          <div class="way-card-name">New Roof</div>
+          <div class="way-card-desc">Building fund for repairs</div>
+        </div>
+        <div class="way-card-amount">$2,323</div>
+        <div class="way-card-pooled">Pooled</div>
+      </div>
+      <div class="way-card" style="background-image:url('https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=500&h=700&fit=crop')">
+        <div class="way-card-content">
+          <div class="way-card-name">Food Pantry</div>
+          <div class="way-card-desc">Weekly community meals</div>
+        </div>
+        <div class="way-card-amount">$1,890</div>
+        <div class="way-card-pooled">This week</div>
+      </div>
+      <div class="way-card" style="background-image:url('https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=500&h=700&fit=crop')">
+        <div class="way-card-content">
+          <div class="way-card-name">Sunday School</div>
+          <div class="way-card-desc">Books, snacks, and crafts</div>
+        </div>
+        <div class="way-card-amount">$845</div>
+        <div class="way-card-pooled">Pooled</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEDICATED PLACE -->
+<section class="dedi-sec">
+  <h2 class="dedi-h2">A dedicated home for<br>everything your church gives.</h2>
+  <p class="dedi-sub">Goodbye spreadsheets. Goodbye paper envelopes. Manage every gift and every fund the right way — together, in one place.</p>
+
+  <div class="dedi-layout">
+    <div class="dedi-panel">
+      <div class="dedi-panel-words">
+        <span class="dedi-panel-word active">Collect.</span>
+        <span class="dedi-panel-word">Track.</span>
+        <span class="dedi-panel-word">Spend.</span>
+        <span class="dedi-panel-word">Report.</span>
+      </div>
+      <p class="dedi-panel-desc">Your church, your rules. Track giving openly, invite your team, and manage every fund together.</p>
+    </div>
+
+    <div class="dedi-screen">
+      <div class="dedi-screen-bar">
+        <div class="dedi-screen-dot"></div>
+        <div class="dedi-screen-dot"></div>
+        <div class="dedi-screen-dot"></div>
+        <span class="dedi-screen-url">churchpay.com/grace-community</span>
+      </div>
+      <div class="dedi-screen-body">
+        <div class="dedi-screen-head">
+          <div>
+            <div class="dedi-screen-title">Grace Community Church</div>
+            <div class="dedi-screen-subtitle">Sunday giving · April 28</div>
+          </div>
+          <div style="text-align:right">
+            <div class="dedi-screen-subtitle" style="margin:0 0 4px">Total pooled</div>
+            <div class="dedi-screen-amt">$24,180</div>
+          </div>
+        </div>
+        <div class="dedi-screen-buttons">
+          <button class="dedi-btn dedi-btn-primary">+ Give now</button>
+          <button class="dedi-btn dedi-btn-ghost">Send to fund →</button>
+        </div>
+        <div class="dedi-tx-label">Recent activity</div>
+        <div class="dedi-tx-row">
+          <span class="dedi-tx-date">Apr 28</span>
+          <span class="dedi-tx-from">From <b>Amanda K.</b> to General Fund</span>
+          <span class="dedi-tx-icon">↗</span>
+          <span class="dedi-tx-amt">+$200.00</span>
+          <span class="dedi-tx-status done">Posted</span>
+        </div>
+        <div class="dedi-tx-row">
+          <span class="dedi-tx-date">Apr 28</span>
+          <span class="dedi-tx-from">From <b>Sarah R.</b> to Missions Fund</span>
+          <span class="dedi-tx-icon">↗</span>
+          <span class="dedi-tx-amt">+$1,000.00</span>
+          <span class="dedi-tx-status done">Posted</span>
+        </div>
+        <div class="dedi-tx-row">
+          <span class="dedi-tx-date">Apr 27</span>
+          <span class="dedi-tx-from">Spent at <b>Office Depot</b>: Sunday school</span>
+          <span class="dedi-tx-icon">←</span>
+          <span class="dedi-tx-amt">-$89.97</span>
+          <span class="dedi-tx-status done">Posted</span>
+        </div>
+        <div class="dedi-tx-row">
+          <span class="dedi-tx-date">Apr 27</span>
+          <span class="dedi-tx-from">Sent to <b>Lagos branch</b></span>
+          <span class="dedi-tx-icon">↗</span>
+          <span class="dedi-tx-amt">-$2,400.00</span>
+          <span class="dedi-tx-status pending">Pending</span>
+        </div>
+        <div class="dedi-tx-row">
+          <span class="dedi-tx-date">Apr 26</span>
+          <span class="dedi-tx-from">From <b>Marcus T.</b> recurring tithe</span>
+          <span class="dedi-tx-icon">↗</span>
+          <span class="dedi-tx-amt">+$50.00</span>
+          <span class="dedi-tx-status done">Posted</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPEND -->
+<section class="spend-sec">
+  <div class="spend-layout">
+    <div>
+      <h2 class="spend-h2">Spend right from<br>your church balance.</h2>
+      <p class="spend-body">Your church comes with a Visa debit card for every leader who needs one. Spend openly, right from your church balance — no chasing receipts, no reimbursements, no awkward conversations with the treasurer.</p>
+      <p class="spend-fine">Use of card is subject to Cardholder Agreement.</p>
+    </div>
+
+    <div class="spend-card">
+      <div class="spend-card-head">
+        <div>
+          <div class="spend-card-label">Church balance</div>
+          <div class="spend-card-bal">$28,142.50</div>
+        </div>
+      </div>
+      <div class="spend-rows">
+        <div class="spend-row">
+          <div class="spend-row-av" style="background-image:url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop')"></div>
+          <span class="spend-row-name">Amanda gave</span>
+          <span class="spend-row-amt" style="color:#163300">+$200.00</span>
+        </div>
+        <div class="spend-row">
+          <div class="spend-row-av" style="background-image:url('https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop')"></div>
+          <span class="spend-row-name">Pastor James spent</span>
+          <span class="spend-row-amt neg">-$89.97</span>
+        </div>
+        <div class="spend-row">
+          <div class="spend-row-av" style="background-image:url('https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop')"></div>
+          <span class="spend-row-name">Treasurer Marc</span>
+          <span class="spend-row-amt neg">-$42.50</span>
+        </div>
+        <div class="spend-row">
+          <div class="spend-row-av" style="background-image:url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop')"></div>
+          <span class="spend-row-name">Sarah gave</span>
+          <span class="spend-row-amt" style="color:#163300">+$1,000.00</span>
+        </div>
+      </div>
+      <div class="spend-card-visa">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+          <div class="spend-card-visa-logo">✦ ChurchPay</div>
+          <div class="spend-card-chip"></div>
+        </div>
+        <div class="spend-card-visa-bot">
+          <div style="font-family:var(--display); font-size:13px; opacity:0.65; letter-spacing:0.1em; font-weight:600">PASTOR JAMES</div>
+          <div class="spend-card-brand">VISA</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BUILT IN -->
+<section class="built-sec">
+  <h2 class="built-h2">Made for the way<br>your church really runs.</h2>
+  <p class="built-sub">Every little thing your treasurer wishes they had — built in, ready to go.</p>
+
+  <div class="built-grid">
+    <div class="built-card cream">
+      <div class="built-card-img" style="background-image:url('https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?w=200&h=200&fit=crop')"></div>
+      <h3 class="built-card-h3">Give in seconds.</h3>
+      <p class="built-card-p">Members scan a QR code from the screen or open the app. Recurring tithes? One tap. Every gift goes straight to the right fund.</p>
+    </div>
+
+    <div class="built-card dark">
+      <div class="built-card-img" style="background-image:url('https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=200&h=200&fit=crop')"></div>
+      <h3 class="built-card-h3">Funds stay separate.</h3>
+      <p class="built-card-p">Missions money stays in missions. Building fund stays in building. The system keeps your designated funds straight — automatically.</p>
+    </div>
+
+    <div class="built-card grass">
+      <div class="built-card-img" style="background-image:url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=200&h=200&fit=crop')"></div>
+      <h3 class="built-card-h3">Year-end statements, done.</h3>
+      <p class="built-card-p">Tax receipts for every member, sent automatically every January. Your treasurer gets their evenings back.</p>
+    </div>
+
+    <div class="built-card mustard">
+      <div class="built-card-img" style="background-image:url('https://images.unsplash.com/photo-1556742044-3c52d6e88c62?w=200&h=200&fit=crop')"></div>
+      <h3 class="built-card-h3">Reports in one click.</h3>
+      <p class="built-card-p">Need numbers for the next board meeting? Tap one button. Get a clean, printable summary by fund, by month, by service.</p>
+    </div>
+
+    <div class="built-card sky">
+      <div class="built-card-img" style="background-image:url('https://images.unsplash.com/photo-1521791136064-7986c2920216?w=200&h=200&fit=crop')"></div>
+      <h3 class="built-card-h3">Send anywhere, instantly.</h3>
+      <p class="built-card-p">Have a branch in Lagos or a partner in London? Move money across borders in seconds — no wire fees, no waiting.</p>
+    </div>
+
+    <div class="built-card">
+      <div class="built-card-img" style="background-image:url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=200&h=200&fit=crop')"></div>
+      <h3 class="built-card-h3">Set up in 15 minutes.</h3>
+      <p class="built-card-p">No IT department needed. No long onboarding. Most churches are live and accepting gifts before next Sunday rolls around.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SAFETY -->
+<section class="safety-sec">
+  <div class="safety-layout">
+    <div>
+      <h2 class="safety-h2">Built to keep<br>tithes safe.</h2>
+      <p class="safety-body">Your church's money and your members' information are protected with bank-level security. Every transaction is encrypted, every account is monitored, and every dollar is accounted for.</p>
+      <p class="safety-body">ChurchPay partners with FDIC-insured banks. Funds are eligible for FDIC insurance up to $250,000 per depositor — subject to FDIC rules and limits, and only in the event of the failure of the insured bank.</p>
+    </div>
+
+    <div class="safety-visual">
+      <div class="safety-mark">✦</div>
+      <div class="safety-pill safety-pill-1">
+        <div class="safety-pill-av" style="background:#163300; color:#E2F6D5">MT</div>
+        Marcus tithed <span class="pos">+$50</span>
+      </div>
+      <div class="safety-pill safety-pill-2">
+        <div class="safety-pill-av" style="background:#E2F6D5; color:#163300">SR</div>
+        Sarah gave <span class="pos">+$1,000</span>
+      </div>
+      <div class="safety-pill safety-pill-3">
+        <div class="safety-pill-av" style="background:#163300; color:#E2F6D5">PJ</div>
+        Pastor James spent <span class="neg">-$89.97</span>
+      </div>
+      <div class="safety-pill safety-pill-4">
+        <div class="safety-pill-av" style="background:#E2F6D5; color:#163300">AK</div>
+        Amanda gave <span class="pos">+$200</span>
+      </div>
+      <div class="safety-pill safety-pill-5">
+        <div class="safety-pill-av" style="background:#163300; color:#E2F6D5">LB</div>
+        Linda gave <span class="pos">+$120</span>
+      </div>
+      <div class="safety-pill safety-pill-6">
+        <div class="safety-pill-av" style="background:#FFC091; color:#0E0F0C">DR</div>
+        David spent <span class="neg">-$42.50</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BIG CTA -->
+<section class="cta-big">
+  <div class="cta-icons">
+    <div class="cta-icon-circle" style="background-image:url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&h=120&fit=crop')"></div>
+    <div class="cta-icon-circle" style="background-image:url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&h=120&fit=crop')"></div>
+    <div class="cta-icon-circle" style="background-image:url('https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=120&h=120&fit=crop')"></div>
+    <div class="cta-icon-circle" style="background-image:url('https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=120&h=120&fit=crop')"></div>
+  </div>
+  <h2 class="cta-h2">Give together.<br>Grow together.</h2>
+  <p class="cta-sub">A regular bank account isn't built for your church. Collect, manage, and spend the way your congregation deserves.</p>
+  <button class="cta-btn">Get early access</button>
+</section>
+
+<!-- FAQ -->
+<section class="faq-sec">
+  <div class="faq-layout">
+    <div>
+      <h2 class="faq-h2">Answers to<br>your questions</h2>
+    </div>
+    <div>
+      <div class="faq-item">
+        <div class="faq-q">
+          <span>Does ChurchPay charge fees?</span>
+          <span class="faq-q-plus">+</span>
+        </div>
+        <div class="faq-a">
+          <p>ChurchPay is free for your church to set up and use. A small fee is taken from each gift to cover card processing — far less than most church management platforms. No monthly fees. No setup fees. No surprises.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          <span>How do members give?</span>
+          <span class="faq-q-plus">+</span>
+        </div>
+        <div class="faq-a">
+          <p>Members can give by scanning a QR code shown during service or by using the ChurchPay app. Setting up recurring tithes takes about ten seconds. Year-end statements are generated automatically — no work from your treasurer.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          <span>Is ChurchPay a bank? Are funds FDIC-insured?</span>
+          <span class="faq-q-plus">+</span>
+        </div>
+        <div class="faq-a">
+          <p>ChurchPay is a financial technology company, not a bank. Funds are held with FDIC-insured partner banks and are eligible for FDIC insurance up to $250,000 per depositor.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          <span>Can multiple people manage the church account?</span>
+          <span class="faq-q-plus">+</span>
+        </div>
+        <div class="faq-a">
+          <p>Yes. Pastors, treasurers, deacons, and administrators can each have their own access with custom permissions. Cards can be issued with spending limits and category controls — so the right people have the right access.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          <span>How is ChurchPay different from PayPal or Venmo?</span>
+          <span class="faq-q-plus">+</span>
+        </div>
+        <div class="faq-a">
+          <p>ChurchPay is purpose-built for churches. It handles designated funds, automatic year-end giving statements, multi-leader card controls, board-ready reports, and cross-border branch transfers — none of which a regular payment app can do.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          <span>How long does it take to get set up?</span>
+          <span class="faq-q-plus">+</span>
+        </div>
+        <div class="faq-a">
+          <p>Most churches go from sign-up to accepting their first gift in under 30 minutes. Setup takes about 15 minutes once you have your church's basic info and a couple of leaders to invite.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          <span>I want to talk to someone. How?</span>
+          <span class="faq-q-plus">+</span>
+        </div>
+        <div class="faq-a">
+          <p>Reach us at hello@churchpay.com or request a quick walkthrough. We usually respond the same day.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-wordmark">ChurchPay</div>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand-icon">✦</div>
+      <p style="color:rgba(226,246,213,0.65); font-size:13px; line-height:1.65; max-width:280px; font-weight:500;">
+        One home for your church's money. Built for Sunday giving, weekly spending, and every fund in between.
+      </p>
+    </div>
+    <div class="footer-cols">
+      <div>
+        <p class="footer-col-head">Company</p>
+        <ul class="footer-links">
+          <li><a href="#">About</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-head">Legal</p>
+        <ul class="footer-links">
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Cardholder Terms</a></li>
+          <li><a href="#">Security</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bot">
+    <p>© 2025 ChurchPay, Inc. All rights reserved.</p>
+    <p>* ChurchPay is a financial technology company, not a bank.</p>
+  </div>
+</footer>
+
+<script>
+// FAQ accordion
+document.querySelectorAll('.faq-item').forEach(item => {
+  item.addEventListener('click', () => { item.classList.toggle('open'); });
+});
+
+// Word rotation on "Collect / Track / Spend / Report"
+const words = document.querySelectorAll('.dedi-panel-word');
+let activeIdx = 0;
+setInterval(() => {
+  words[activeIdx].classList.remove('active');
+  activeIdx = (activeIdx + 1) % words.length;
+  words[activeIdx].classList.add('active');
+}, 2000);
+</script>
+
+</body>
+</html>
