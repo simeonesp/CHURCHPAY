@@ -133,10 +133,13 @@ body {
     position: relative; opacity: 1 !important; transform: none !important;
     pointer-events: auto; page-break-after: always; break-after: page;
     height: 100vh; display: block !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
   }
   .nav-bar { display: none; }
   .no-print { display: none !important; }
 }
+* { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
 </style>
 </head>
 <body>
