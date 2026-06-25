@@ -127,19 +127,22 @@ body {
 
 /* ── Print / PDF ── */
 @media print {
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
   html, body { overflow: visible; height: auto; }
   .deck { overflow: visible; height: auto; position: static; }
   .slide {
     position: relative; opacity: 1 !important; transform: none !important;
     pointer-events: auto; page-break-after: always; break-after: page;
     height: 100vh; display: block !important;
-    print-color-adjust: exact;
-    -webkit-print-color-adjust: exact;
   }
   .nav-bar { display: none; }
   .no-print { display: none !important; }
 }
-* { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+* { print-color-adjust: exact; -webkit-print-color-adjust: exact; color-adjust: exact; }
 </style>
 </head>
 <body>
