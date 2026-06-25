@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChurchPay — Investor Pitch Deck 2025</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ev:   #163300;
+  --mint: #E2F6D5;
+  --cv:   #FBFBF9;
+  --dk:   #0E0F0C;
+  --cel:  #FFC091;
+  --sec:  #454745;
+  --mu:   #868685;
+  --f: 'Geist', system-ui, sans-serif;
+}
+
+html, body { width: 100%; height: 100%; overflow: hidden; }
+
+body {
+  font-family: var(--f);
+  background: var(--dk);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Slide container ── */
+.deck { position: relative; width: 100vw; height: 100vh; overflow: hidden; }
+
+.slide {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100vh;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateX(4%);
+  transition: opacity 0.4s cubic-bezier(0.4,0,0.2,1), transform 0.4s cubic-bezier(0.4,0,0.2,1);
+  pointer-events: none;
+}
+.slide.active  { opacity: 1; transform: translateX(0); pointer-events: auto; }
+.slide.behind  { transform: translateX(-4%); }
+
+/* ── NavBar ── */
+.nav-bar {
+  position: fixed; bottom: 0; left: 0; right: 0; height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 32px; z-index: 200;
+  backdrop-filter: blur(12px);
+}
+.nav-bar.light { background: rgba(251,251,249,0.95); border-top: 1px solid rgba(14,15,12,0.08); }
+.nav-bar.dark  { background: rgba(14,15,12,0.9); border-top: 1px solid rgba(255,255,255,0.08); }
+.nav-title { font-size: 13px; font-weight: 600; min-width: 160px; }
+.nav-title.light { color: var(--dk); }
+.nav-title.dark  { color: var(--mint); }
+.nav-dots { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.dots-row { display: flex; gap: 6px; align-items: center; }
+.dot {
+  border-radius: 50%;
+  width: 5px; height: 5px;
+  transition: all 0.3s ease;
+}
+.dot.active-dot { width: 10px; height: 10px; }
+.nav-counter { font-size: 11px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.nav-btns { display: flex; gap: 8px; min-width: 160px; justify-content: flex-end; }
+.nav-btn {
+  width: 32px; height: 32px; border-radius: 999px; border: none;
+  cursor: pointer; font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+}
+.nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* ── Shared ── */
+.label { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; }
+.huge  { font-weight: 900; letter-spacing: -0.04em; line-height: 0.88; }
+
+/* ── Phone Mockup ── */
+.phone {
+  width: 234px; height: 486px; border-radius: 40px;
+  background: #1C1C1E; position: relative; flex-shrink: 0;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.08);
+}
+.phone-screen {
+  position: absolute; top: 3px; left: 3px; right: 3px; bottom: 3px;
+  border-radius: 37px; overflow: hidden; background: var(--cv);
+}
+.phone-notch {
+  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 81px; height: 24px; background: #1C1C1E;
+  border-radius: 0 0 16px 16px; z-index: 10;
+}
+.phone-home {
+  position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
+  width: 90px; height: 4px; background: rgba(255,255,255,0.3); border-radius: 2px;
+}
+.phone-btn-r {
+  position: absolute; right: -3px; top: 108px;
+  width: 3px; height: 54px; background: #2a2a2c; border-radius: 0 2px 2px 0;
+}
+.phone-vol1 { position: absolute; left: -3px; top: 72px; width: 3px; height: 32px; background: #2a2a2c; border-radius: 2px 0 0 2px; }
+.phone-vol2 { position: absolute; left: -3px; top: 126px; width: 3px; height: 32px; background: #2a2a2c; border-radius: 2px 0 0 2px; }
+
+/* ── Laptop Mockup ── */
+.laptop { display: flex; flex-direction: column; align-items: center; }
+.laptop-screen-housing {
+  width: 680px; background: linear-gradient(180deg,#E0E0E0 0%,#D0D0D0 100%);
+  border-radius: 16px 16px 0 0; padding: 10px 10px 0;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+}
+.laptop-camera-strip { height: 20px; display: flex; align-items: center; justify-content: center; }
+.laptop-cam-dot { width: 5px; height: 5px; border-radius: 50%; background: #A0A0A0; }
+.laptop-display {
+  width: 660px; height: 400px; background: var(--cv);
+  border-radius: 8px; overflow: hidden;
+}
+.laptop-base {
+  width: 720px; height: 24px;
+  background: linear-gradient(180deg,#CACACA 0%,#B8B8B8 100%);
+  border-radius: 0 0 12px 12px; position: relative;
+}
+.laptop-base::after {
+  content: ''; position: absolute; top: 4px; left: 50%; transform: translateX(-50%);
+  width: 60px; height: 4px; background: #A8A8A8; border-radius: 2px;
+}
+
+/* ── Print / PDF ── */
+@media print {
+  html, body { overflow: visible; height: auto; }
+  .deck { overflow: visible; height: auto; position: static; }
+  .slide {
+    position: relative; opacity: 1 !important; transform: none !important;
+    pointer-events: auto; page-break-after: always; break-after: page;
+    height: 100vh; display: block !important;
+  }
+  .nav-bar { display: none; }
+  .no-print { display: none !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+<!-- ─── SLIDE 1 — TITLE ─── -->
+<div class="slide active" data-dark="1" style="background:#163300;">
+  <div style="width:100%;height:100vh;display:flex;overflow:hidden;">
+    <!-- Left 55% -->
+    <div style="width:55%;height:100vh;padding:80px;display:flex;flex-direction:column;justify-content:space-between;">
+      <!-- Logo -->
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="width:36px;height:36px;border-radius:50%;background:#E2F6D5;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="#163300" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <span style="font-weight:800;font-size:17px;color:#E2F6D5;letter-spacing:-0.02em;">ChurchPay</span>
+      </div>
+      <!-- Headline -->
+      <div>
+        <div style="font-size:11px;font-weight:700;color:#E2F6D5;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:24px;opacity:0.6;">Pre-seed · 2025</div>
+        <h1 style="font-weight:900;font-size:clamp(72px,11vw,130px);color:#E2F6D5;line-height:0.88;letter-spacing:-0.04em;margin:0;">CHURCH<br><span style="color:#FFC091;">PAY</span></h1>
+        <div style="font-size:18px;font-weight:600;color:rgba(226,246,213,0.75);margin-top:28px;letter-spacing:-0.01em;">Financial infrastructure for the global church</div>
+        <div style="font-size:15px;font-weight:600;color:rgba(226,246,213,0.5);margin-top:8px;">Receive donations from any country, in any currency, in seconds.</div>
+      </div>
+      <!-- Founders -->
+      <div style="font-size:13px;font-weight:600;color:rgba(226,246,213,0.45);">Olayinka Akinhanmi · Obiaka Emeka &nbsp;|&nbsp; hello@churchpay.com</div>
+    </div>
+    <!-- Right 45% -->
+    <div style="width:45%;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:48px;">
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(226,246,213,0.08) 0%,transparent 70%);pointer-events:none;"></div>
+      <!-- Globe SVG -->
+      <svg width="280" height="280" style="opacity:0.08;">
+        <circle cx="140" cy="140" r="123.2" fill="none" stroke="#E2F6D5" stroke-width="1"/>
+        <ellipse cx="140" cy="71" rx="107" ry="27" fill="none" stroke="#E2F6D5" stroke-width="0.5" stroke-dasharray="3 4"/>
+        <ellipse cx="140" cy="107" rx="120" ry="30" fill="none" stroke="#E2F6D5" stroke-width="0.5" stroke-dasharray="3 4"/>
+        <ellipse cx="140" cy="140" rx="123" ry="31" fill="none" stroke="#E2F6D5" stroke-width="0.5" stroke-dasharray="3 4"/>
+        <ellipse cx="140" cy="173" rx="120" ry="30" fill="none" stroke="#E2F6D5" stroke-width="0.5" stroke-dasharray="3 4"/>
+        <ellipse cx="140" cy="209" rx="107" ry="27" fill="none" stroke="#E2F6D5" stroke-width="0.5" stroke-dasharray="3 4"/>
+        <ellipse cx="140" cy="140" rx="25" ry="123" fill="none" stroke="#E2F6D5" stroke-width="0.5" stroke-dasharray="3 4"/>
+        <ellipse cx="140" cy="140" rx="25" ry="123" fill="none" stroke="#E2F6D5" stroke-width="0.5" stroke-dasharray="3 4" transform="rotate(36,140,140)"/>
+        <ellipse cx="140" cy="140" rx="25" ry="123" fill="none" stroke="#E2F6D5" stroke-width="0.5" stroke-dasharray="3 4" transform="rotate(72,140,140)"/>
+        <ellipse cx="140" cy="140" rx="25" ry="123" fill="none" stroke="#E2F6D5" stroke-width="0.5" stroke-dasharray="3 4" transform="rotate(108,140,140)"/>
+        <ellipse cx="140" cy="140" rx="25" ry="123" fill="none" stroke="#E2F6D5" stroke-width="0.5" stroke-dasharray="3 4" transform="rotate(144,140,140)"/>
+        <circle cx="86" cy="115" r="4" fill="#E2F6D5"/>
+        <circle cx="157" cy="133" r="4" fill="#E2F6D5"/>
+        <circle cx="143" cy="79" r="4" fill="#E2F6D5"/>
+        <circle cx="183" cy="120" r="4" fill="#E2F6D5"/>
+        <circle cx="168" cy="158" r="4" fill="#E2F6D5"/>
+        <circle cx="148" cy="101" r="4" fill="#E2F6D5"/>
+        <circle cx="142" cy="137" r="4" fill="#E2F6D5"/>
+        <circle cx="136" cy="101" r="4" fill="#E2F6D5"/>
+      </svg>
+      <!-- Currency chips -->
+      <div style="position:absolute;top:22%;left:4%;background:#E2F6D5;color:#163300;font-weight:700;font-size:12px;border-radius:999px;padding:6px 14px;">₦ NGN</div>
+      <div style="position:absolute;top:18%;right:8%;background:#E2F6D5;color:#163300;font-weight:700;font-size:12px;border-radius:999px;padding:6px 14px;">£ GBP</div>
+      <div style="position:absolute;bottom:30%;left:2%;background:#E2F6D5;color:#163300;font-weight:700;font-size:12px;border-radius:999px;padding:6px 14px;">KSh KES</div>
+      <div style="position:absolute;bottom:28%;right:6%;background:#E2F6D5;color:#163300;font-weight:700;font-size:12px;border-radius:999px;padding:6px 14px;">$ USD</div>
+      <div style="position:absolute;bottom:32px;right:40px;font-size:11px;font-weight:700;color:rgba(226,246,213,0.25);letter-spacing:0.08em;">01 / 16</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── SLIDE 2 — WHO WE ARE ─── -->
+<div class="slide" data-dark="0" style="background:#FBFBF9;">
+  <div style="display:flex;height:100vh;">
+    <div style="flex:0 0 55%;padding:80px;display:flex;flex-direction:column;justify-content:center;">
+      <div class="label" style="color:#868685;">WHO WE ARE</div>
+      <div style="font-size:clamp(32px,4vw,52px);font-weight:900;color:#0E0F0C;letter-spacing:-0.03em;line-height:0.95;margin-top:16px;max-width:480px;">We didn't study this problem. We ran it.</div>
+      <div style="margin-top:40px;border-left:4px solid #E2F6D5;padding:8px 24px;">
+        <p style="font-size:16px;font-weight:700;color:#454745;line-height:1.6;font-style:italic;margin:0;">"Together we know the product, the operations, and the money movement side."</p>
+      </div>
+    </div>
+    <div style="flex:0 0 45%;background:#163300;display:flex;flex-direction:column;justify-content:center;gap:20px;padding:48px;">
+      <!-- Founder 1 -->
+      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(226,246,213,0.15);border-radius:20px;padding:24px;display:flex;gap:20px;align-items:flex-start;">
+        <img src="/ola.jpg" alt="Olayinka" style="width:64px;height:64px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid #E2F6D5;flex-shrink:0;" onerror="this.style.display='none'">
+        <div>
+          <div style="font-weight:800;font-size:16px;color:#E2F6D5;">Olayinka Akinhanmi</div>
+          <div style="display:inline-block;background:rgba(226,246,213,0.1);color:#E2F6D5;border-radius:999px;padding:3px 10px;font-size:11px;font-weight:700;margin-top:6px;">Co-founder &amp; CEO</div>
+          <div style="color:rgba(226,246,213,0.65);font-size:13px;font-weight:600;line-height:1.5;margin-top:10px;">Built and scaled KingsPay for a 2M-member global church. 10+ years in high-compliance fintech.</div>
+        </div>
+      </div>
+      <!-- Founder 2 -->
+      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(226,246,213,0.15);border-radius:20px;padding:24px;display:flex;gap:20px;align-items:flex-start;">
+        <img src="/obi.jpeg" alt="Obiaka" style="width:64px;height:64px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid rgba(226,246,213,0.3);flex-shrink:0;" onerror="this.style.display='none'">
+        <div>
+          <div style="font-weight:800;font-size:16px;color:#E2F6D5;">Obiaka Emeka</div>
+          <div style="display:inline-block;background:rgba(226,246,213,0.1);color:#E2F6D5;border-radius:999px;padding:3px 10px;font-size:11px;font-weight:700;margin-top:6px;">Co-founder · Liquidity &amp; Risk</div>
+          <div style="color:rgba(226,246,213,0.65);font-size:13px;font-weight:600;line-height:1.5;margin-top:10px;">14 years at Goldman Sachs — VP, Emerging Markets Debt. Founder, Voltech Capital LP.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:24px;padding-top:4px;">
+        <span style="font-size:11px;font-weight:700;color:rgba(226,246,213,0.3);">Goldman Sachs</span>
+        <span style="font-size:11px;font-weight:700;color:rgba(226,246,213,0.3);">KingsPay</span>
+        <span style="font-size:11px;font-weight:700;color:rgba(226,246,213,0.3);">Voltech Capital</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── SLIDE 3 — THE PROBLEM ─── -->
+<div class="slide" data-dark="1" style="background:#0E0F0C;position:relative;">
+  <div style="position:absolute;top:0;right:0;width:320px;height:280px;opacity:0.04;pointer-events:none;">
+    <svg width="320" height="280"><circle cx="24" cy="18" r="2.5" fill="#E2F6D5"/><circle cx="72" cy="18" r="2.5" fill="#E2F6D5"/><circle cx="120" cy="18" r="2.5" fill="#E2F6D5"/><circle cx="168" cy="18" r="2.5" fill="#E2F6D5"/><circle cx="216" cy="18" r="2.5" fill="#E2F6D5"/><circle cx="264" cy="18" r="2.5" fill="#E2F6D5"/><circle cx="24" cy="54" r="2.5" fill="#E2F6D5"/><circle cx="72" cy="54" r="2.5" fill="#E2F6D5"/><circle cx="120" cy="54" r="2.5" fill="#E2F6D5"/><circle cx="168" cy="54" r="2.5" fill="#E2F6D5"/><circle cx="216" cy="54" r="2.5" fill="#E2F6D5"/><circle cx="264" cy="54" r="2.5" fill="#E2F6D5"/><circle cx="24" cy="90" r="2.5" fill="#E2F6D5"/><circle cx="72" cy="90" r="2.5" fill="#E2F6D5"/><circle cx="120" cy="90" r="2.5" fill="#E2F6D5"/><circle cx="168" cy="90" r="2.5" fill="#E2F6D5"/><circle cx="216" cy="90" r="2.5" fill="#E2F6D5"/><circle cx="264" cy="90" r="2.5" fill="#E2F6D5"/><circle cx="24" cy="126" r="2.5" fill="#E2F6D5"/><circle cx="72" cy="126" r="2.5" fill="#E2F6D5"/><circle cx="120" cy="126" r="2.5" fill="#E2F6D5"/><circle cx="168" cy="126" r="2.5" fill="#E2F6D5"/><circle cx="216" cy="126" r="2.5" fill="#E2F6D5"/><circle cx="264" cy="126" r="2.5" fill="#E2F6D5"/><circle cx="24" cy="162" r="2.5" fill="#E2F6D5"/><circle cx="72" cy="162" r="2.5" fill="#E2F6D5"/><circle cx="120" cy="162" r="2.5" fill="#E2F6D5"/><circle cx="168" cy="162" r="2.5" fill="#E2F6D5"/><circle cx="216" cy="162" r="2.5" fill="#E2F6D5"/><circle cx="264" cy="162" r="2.5" fill="#E2F6D5"/><circle cx="24" cy="198" r="2.5" fill="#E2F6D5"/><circle cx="72" cy="198" r="2.5" fill="#E2F6D5"/><circle cx="120" cy="198" r="2.5" fill="#E2F6D5"/><circle cx="168" cy="198" r="2.5" fill="#E2F6D5"/><circle cx="216" cy="198" r="2.5" fill="#E2F6D5"/><circle cx="264" cy="198" r="2.5" fill="#E2F6D5"/><circle cx="24" cy="234" r="2.5" fill="#E2F6D5"/><circle cx="72" cy="234" r="2.5" fill="#E2F6D5"/><circle cx="120" cy="234" r="2.5" fill="#E2F6D5"/><circle cx="168" cy="234" r="2.5" fill="#E2F6D5"/><circle cx="216" cy="234" r="2.5" fill="#E2F6D5"/><circle cx="264" cy="234" r="2.5" fill="#E2F6D5"/><circle cx="24" cy="270" r="2.5" fill="#E2F6D5"/><circle cx="72" cy="270" r="2.5" fill="#E2F6D5"/><circle cx="120" cy="270" r="2.5" fill="#E2F6D5"/><circle cx="168" cy="270" r="2.5" fill="#E2F6D5"/><circle cx="216" cy="270" r="2.5" fill="#E2F6D5"/><circle cx="264" cy="270" r="2.5" fill="#E2F6D5"/></svg>
+  </div>
+  <div style="display:flex;flex-direction:column;justify-content:center;padding:80px;max-width:900px;height:100vh;">
+    <div class="label" style="color:#FFC091;">THE PROBLEM</div>
+    <div style="margin-top:24px;">
+      <div style="font-size:clamp(40px,6vw,80px);font-weight:900;color:#E2F6D5;letter-spacing:-0.04em;line-height:0.88;">The church went global.</div>
+      <div style="font-size:clamp(40px,6vw,80px);font-weight:900;color:rgba(226,246,213,0.35);letter-spacing:-0.04em;line-height:0.88;">The money rail didn't.</div>
+    </div>
+    <div style="display:flex;gap:16px;margin-top:56px;">
+      <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:28px;flex:1;">
+        <div style="width:8px;height:8px;border-radius:50%;background:#D03238;"></div>
+        <div style="font-weight:800;font-size:16px;color:#FBFBF9;margin-top:12px;">Fragmented local platforms</div>
+        <div style="color:rgba(251,251,249,0.55);font-size:14px;font-weight:600;line-height:1.6;margin-top:8px;">A separate account, entity, and payout in every country it reaches.</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:28px;flex:1;">
+        <div style="width:8px;height:8px;border-radius:50%;background:#D03238;"></div>
+        <div style="font-weight:800;font-size:16px;color:#FBFBF9;margin-top:12px;">PayPal &amp; Stripe</div>
+        <div style="color:rgba(251,251,249,0.55);font-size:14px;font-weight:600;line-height:1.6;margin-top:8px;">Only partially supported in most markets. Both restrict religious organizations.</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:28px;flex:1;">
+        <div style="width:8px;height:8px;border-radius:50%;background:#D03238;"></div>
+        <div style="font-weight:800;font-size:16px;color:#FBFBF9;margin-top:12px;">Bank wires</div>
+        <div style="color:rgba(251,251,249,0.55);font-size:14px;font-weight:600;line-height:1.6;margin-top:8px;">14 days. 6–13% in fees. Zero donor attribution.</div>
+      </div>
+    </div>
+    <div style="margin-top:48px;background:rgba(255,192,145,0.08);border:1px solid rgba(255,192,145,0.2);border-radius:14px;padding:24px;">
+      <p style="color:#FFC091;font-size:16px;font-weight:700;line-height:1.5;margin:0;">"Whether it's a $20 gift from a viewer or a $200K building transfer, the rail is the same: broken."</p>
+    </div>
+  </div>
+</div>
+
+<!-- ─── SLIDE 4 — USE CASES ─── -->
+<div class="slide" data-dark="0" style="background:#FBFBF9;">
+  <div style="padding:72px 80px 100px;height:100vh;display:flex;flex-direction:column;">
+    <div>
+      <div class="label" style="color:#868685;">USE CASES</div>
+      <div style="font-size:clamp(32px,4vw,52px);font-weight:900;color:#0E0F0C;letter-spacing:-0.03em;line-height:0.95;margin-top:8px;">This is what we make possible.</div>
+      <div style="font-size:18px;color:#454745;font-weight:600;margin-top:8px;">Three transactions, one rail.</div>
+    </div>
+    <div style="display:flex;gap:20px;margin-top:40px;flex:1;">
+      <div style="border-radius:24px;padding:36px;flex:1;background:#163300;display:flex;flex-direction:column;overflow:hidden;position:relative;">
+        <div style="display:inline-block;background:rgba(226,246,213,0.15);color:#E2F6D5;border-radius:999px;padding:4px 12px;font-size:10px;font-weight:800;letter-spacing:0.08em;">LIVESTREAM GIVING</div>
+        <div style="margin-top:20px;">
+          <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:20px;">🇳🇬</span><span style="color:#E2F6D5;font-weight:800;font-size:15px;">Adaeze in Lagos</span></div>
+          <div style="font-size:48px;font-weight:900;color:#E2F6D5;font-variant-numeric:tabular-nums;line-height:1;margin-top:8px;">₦25,000</div>
+          <div style="color:#FFC091;font-size:28px;font-weight:900;margin:12px 0;">→</div>
+          <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:20px;">🇺🇸</span><span style="color:rgba(226,246,213,0.8);font-weight:700;font-size:14px;">Hillside Church, Austin</span></div>
+          <div style="font-size:36px;font-weight:900;color:#FFC091;font-variant-numeric:tabular-nums;margin-top:4px;">$16.00</div>
+        </div>
+        <div style="color:#E2F6D5;opacity:0.5;font-size:12px;font-weight:600;margin-top:auto;padding-top:20px;">Settled in seconds, fully attributed.</div>
+      </div>
+      <div style="border-radius:24px;padding:36px;flex:1;background:#1a1a18;display:flex;flex-direction:column;overflow:hidden;">
+        <div style="display:inline-block;background:rgba(255,255,255,0.12);color:#FBFBF9;border-radius:999px;padding:4px 12px;font-size:10px;font-weight:800;letter-spacing:0.08em;">HQ → AFFILIATE</div>
+        <div style="margin-top:20px;">
+          <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:20px;">🇬🇧</span><span style="color:#FBFBF9;font-weight:800;font-size:15px;">New Life HQ, London</span></div>
+          <div style="font-size:40px;font-weight:900;color:#FBFBF9;font-variant-numeric:tabular-nums;line-height:1;margin-top:8px;">$180,000</div>
+          <div style="color:#FFC091;font-size:28px;font-weight:900;margin:12px 0;">→</div>
+          <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:20px;">🇰🇪</span><span style="color:rgba(251,251,249,0.8);font-weight:700;font-size:14px;">New Life Nairobi</span></div>
+          <div style="font-size:32px;font-weight:900;color:#E2F6D5;font-variant-numeric:tabular-nums;margin-top:4px;">KES 23.4M</div>
+        </div>
+        <div style="color:rgba(251,251,249,0.45);font-size:12px;font-weight:600;margin-top:auto;padding-top:20px;">Settled same-day, fully reconciled.</div>
+      </div>
+      <div style="border-radius:24px;padding:36px;flex:1;background:#E2F6D5;display:flex;flex-direction:column;overflow:hidden;">
+        <div style="display:inline-block;background:#163300;color:#E2F6D5;border-radius:999px;padding:4px 12px;font-size:10px;font-weight:800;letter-spacing:0.08em;">MISSIONS</div>
+        <div style="margin-top:20px;">
+          <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:20px;">🇺🇸</span><span style="color:#163300;font-weight:800;font-size:15px;">Grace Church missions fund</span></div>
+          <div style="font-size:40px;font-weight:900;color:#163300;font-variant-numeric:tabular-nums;line-height:1;margin-top:8px;">$42,000</div>
+          <div style="color:#163300;font-size:28px;font-weight:900;opacity:0.6;margin:12px 0;">→</div>
+          <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:20px;">🇵🇭</span><span style="color:#163300;font-weight:700;font-size:14px;">Field team, Manila</span></div>
+          <div style="font-size:32px;font-weight:900;color:#163300;font-variant-numeric:tabular-nums;margin-top:4px;">₱2.36M</div>
+        </div>
+        <div style="color:#163300;opacity:0.55;font-size:12px;font-weight:600;margin-top:auto;padding-top:20px;">Settled in seconds, expense-tagged.</div>
+      </div>
+    </div>
+    <p style="font-size:12px;font-style:italic;color:#868685;margin-top:16px;">Illustrative use cases. Real volume begins post-launch.</p>
+  </div>
+</div>
+
+<!-- ─── SLIDE 5 — OUR SOLUTION ─── -->
+<div class="slide" data-dark="0" style="background:#FBFBF9;">
+  <div style="display:flex;height:100vh;">
+    <div style="flex:0 0 50%;padding:80px 48px 80px 80px;display:flex;flex-direction:column;justify-content:center;">
+      <div class="label" style="color:#868685;">OUR SOLUTION</div>
+      <div style="font-size:clamp(28px,3.5vw,46px);font-weight:900;color:#0E0F0C;letter-spacing:-0.03em;line-height:0.95;margin-top:16px;">Any giver, any country, any currency.</div>
+      <div style="display:flex;flex-direction:column;gap:20px;margin-top:40px;">
+        <div style="display:flex;gap:16px;align-items:flex-start;">
+          <div style="width:32px;height:32px;border-radius:50%;background:#E2F6D5;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7L6 10.5L11.5 4" stroke="#163300" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><div style="font-weight:800;font-size:16px;color:#0E0F0C;">Borderless giving</div><div style="font-weight:600;font-size:14px;color:#454745;line-height:1.5;margin-top:4px;">A giver anywhere donates in their local currency — card, wallet, or mobile money</div></div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start;">
+          <div style="width:32px;height:32px;border-radius:50%;background:#E2F6D5;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7L6 10.5L11.5 4" stroke="#163300" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><div style="font-weight:800;font-size:16px;color:#0E0F0C;">Instant settlement</div><div style="font-weight:600;font-size:14px;color:#454745;line-height:1.5;margin-top:4px;">Funds convert and land in the church's account in seconds, at near-zero cost</div></div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start;">
+          <div style="width:32px;height:32px;border-radius:50%;background:#E2F6D5;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7L6 10.5L11.5 4" stroke="#163300" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><div style="font-weight:800;font-size:16px;color:#0E0F0C;">Reconciliation &amp; treasury</div><div style="font-weight:600;font-size:14px;color:#454745;line-height:1.5;margin-top:4px;">One operating account for multi-currency books, ministry cards, and real-time visibility</div></div>
+        </div>
+      </div>
+    </div>
+    <div style="flex:0 0 50%;background:#163300;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;padding:48px;">
+      <!-- Phone mockup -->
+      <div class="phone">
+        <div class="phone-screen" style="display:flex;flex-direction:column;padding:20px;">
+          <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-top:24px;">
+            <div style="width:20px;height:20px;border-radius:50%;background:#E2F6D5;display:flex;align-items:center;justify-content:center;"><svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="#163300" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <span style="font-size:13px;font-weight:800;color:#163300;">ChurchPay</span>
+          </div>
+          <div style="text-align:center;margin-top:24px;display:flex;flex-direction:column;align-items:center;">
+            <div style="width:52px;height:52px;border-radius:50%;background:#E2F6D5;display:flex;align-items:center;justify-content:center;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2v4M10 4h4M3 21h18M5 21V10l7-7 7 7v11M9 21v-6h6v6" stroke="#163300" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div style="font-weight:800;font-size:18px;color:#0E0F0C;margin-top:12px;">Lakewood Church</div>
+            <div style="color:#868685;font-size:13px;margin-top:4px;">Houston, TX · United States</div>
+            <div style="background:#E2F6D5;color:#163300;border-radius:999px;padding:4px 12px;font-size:11px;font-weight:700;margin-top:12px;">✓ Verified church on ChurchPay</div>
+          </div>
+          <div style="flex:1;"></div>
+          <div style="width:100%;height:52px;background:#163300;border-radius:9999px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px;color:#E2F6D5;margin-bottom:24px;">Give</div>
+        </div>
+        <div class="phone-notch"></div>
+        <div class="phone-home"></div>
+        <div class="phone-btn-r"></div>
+        <div class="phone-vol1"></div>
+        <div class="phone-vol2"></div>
+      </div>
+      <div style="color:#E2F6D5;opacity:0.5;font-size:13px;font-weight:600;text-align:center;">Mobile give checkout · Zero install required</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── SLIDE 6 — HOW IT WORKS ─── -->
+<div class="slide" data-dark="1" style="background:#0E0F0C;">
+  <div style="display:flex;height:100vh;">
+    <div style="flex:0 0 55%;padding:80px;display:flex;flex-direction:column;justify-content:center;">
+      <div class="label" style="color:#FFC091;">HOW IT WORKS</div>
+      <div style="font-size:clamp(28px,4vw,52px);font-weight:900;color:#FBFBF9;letter-spacing:-0.03em;line-height:0.95;margin-top:16px;">Money in, money out — in seconds.</div>
+      <div style="margin-top:16px;font-size:16px;color:rgba(251,251,249,0.55);font-weight:600;line-height:1.6;max-width:440px;">One rail for every kind of money the church moves across borders.</div>
+      <div style="display:flex;flex-direction:column;margin-top:40px;">
+        <div style="display:flex;gap:24px;padding:28px 0;border-bottom:1px solid rgba(255,255,255,0.06);">
+          <div style="font-size:40px;font-weight:900;color:rgba(226,246,213,0.12);font-variant-numeric:tabular-nums;min-width:64px;line-height:1;">01</div>
+          <div><div style="font-weight:800;font-size:18px;color:#E2F6D5;">The giver</div><div style="font-weight:700;font-size:13px;color:#FFC091;margin-top:2px;">Pays in local currency</div><div style="color:rgba(251,251,249,0.55);font-size:14px;font-weight:600;line-height:1.55;margin-top:6px;">Card, wallet, or mobile money — in naira, pounds, won, anything.</div></div>
+        </div>
+        <div style="display:flex;gap:24px;padding:28px 0;border-bottom:1px solid rgba(255,255,255,0.06);">
+          <div style="font-size:40px;font-weight:900;color:rgba(226,246,213,0.12);font-variant-numeric:tabular-nums;min-width:64px;line-height:1;">02</div>
+          <div><div style="font-weight:800;font-size:18px;color:#E2F6D5;">ChurchPay</div><div style="font-weight:700;font-size:13px;color:#FFC091;margin-top:2px;">Converts &amp; settles instantly</div><div style="color:rgba(251,251,249,0.55);font-size:14px;font-weight:600;line-height:1.55;margin-top:6px;">Currency converted and routed in seconds, at near-zero cost.</div></div>
+        </div>
+        <div style="display:flex;gap:24px;padding:28px 0;">
+          <div style="font-size:40px;font-weight:900;color:rgba(226,246,213,0.12);font-variant-numeric:tabular-nums;min-width:64px;line-height:1;">03</div>
+          <div><div style="font-weight:800;font-size:18px;color:#E2F6D5;">The church</div><div style="font-weight:700;font-size:13px;color:#FFC091;margin-top:2px;">Receives in USD or local</div><div style="color:rgba(251,251,249,0.55);font-size:14px;font-weight:600;line-height:1.55;margin-top:6px;">Funds land in one account, every gift attributed automatically.</div></div>
+        </div>
+      </div>
+    </div>
+    <div style="flex:0 0 45%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px;gap:0;">
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:20px;width:240px;text-align:center;">
+        <span style="font-size:32px;">🇳🇬</span>
+        <div style="font-weight:700;color:#FBFBF9;font-size:14px;margin-top:8px;">Giver in Lagos</div>
+        <div style="font-weight:900;font-size:28px;color:#FFC091;font-variant-numeric:tabular-nums;margin-top:4px;">₦25,000</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;">
+        <div style="width:2px;height:20px;background:rgba(226,246,213,0.2);"></div>
+        <div style="width:8px;height:8px;background:#E2F6D5;transform:rotate(45deg);border-radius:1px;"></div>
+        <div style="width:2px;height:20px;background:rgba(226,246,213,0.2);"></div>
+      </div>
+      <div style="background:#163300;border:1px solid rgba(226,246,213,0.2);border-radius:16px;padding:20px;width:240px;text-align:center;">
+        <div style="font-weight:800;font-size:14px;color:#E2F6D5;margin-top:4px;">Instant conversion</div>
+        <div style="color:#E2F6D5;opacity:0.6;font-size:12px;margin-top:4px;">Mid-market rate · Sub-cent cost</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;">
+        <div style="width:2px;height:20px;background:rgba(226,246,213,0.2);"></div>
+        <div style="width:8px;height:8px;background:#E2F6D5;transform:rotate(45deg);border-radius:1px;"></div>
+        <div style="width:2px;height:20px;background:rgba(226,246,213,0.2);"></div>
+      </div>
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:20px;width:240px;text-align:center;">
+        <span style="font-size:32px;">🇺🇸</span>
+        <div style="font-weight:700;color:#FBFBF9;font-size:14px;margin-top:8px;">Church in Austin</div>
+        <div style="font-weight:900;font-size:28px;color:#E2F6D5;font-variant-numeric:tabular-nums;margin-top:4px;">$16.00</div>
+        <div style="color:#E2F6D5;opacity:0.5;font-size:12px;margin-top:4px;">Fully attributed</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── SLIDE 7 — THE PLATFORM ─── -->
+<div class="slide" data-dark="0" style="background:#FBFBF9;">
+  <div style="padding:64px 80px 80px;height:100vh;display:flex;flex-direction:column;">
+    <div>
+      <div class="label" style="color:#868685;">THE PLATFORM</div>
+      <div style="font-size:clamp(28px,3.5vw,48px);font-weight:900;color:#0E0F0C;letter-spacing:-0.03em;line-height:0.95;margin-top:8px;max-width:700px;">Donations are the wedge. The platform is the prize.</div>
+    </div>
+    <div style="display:flex;gap:40px;margin-top:40px;flex:1;">
+      <div style="flex:1;display:flex;flex-direction:column;">
+        <div style="display:flex;gap:20px;align-items:flex-start;padding:20px 0;border-bottom:1px solid rgba(14,15,12,0.08);">
+          <div style="width:32px;height:32px;border-radius:50%;background:#163300;color:#E2F6D5;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0;">1</div>
+          <div><div style="display:flex;align-items:center;gap:10px;"><span style="font-weight:800;font-size:18px;color:#0E0F0C;">Donations</span><span style="background:#163300;color:#E2F6D5;border-radius:999px;padding:2px 10px;font-size:10px;font-weight:800;letter-spacing:0.06em;">WEDGE</span></div><div style="font-weight:600;font-size:14px;color:#454745;line-height:1.5;margin-top:4px;">Cross-border giving from livestream and in-person congregants</div></div>
+        </div>
+        <div style="display:flex;gap:20px;align-items:flex-start;padding:20px 0;border-bottom:1px solid rgba(14,15,12,0.08);">
+          <div style="width:32px;height:32px;border-radius:50%;background:#163300;color:#E2F6D5;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0;">2</div>
+          <div><div style="display:flex;align-items:center;gap:10px;"><span style="font-weight:800;font-size:18px;color:#0E0F0C;">HQ → Affiliate</span><span style="background:#E2F6D5;color:#163300;border-radius:999px;padding:2px 10px;font-size:10px;font-weight:800;letter-spacing:0.06em;">PLATFORM</span></div><div style="font-weight:600;font-size:14px;color:#454745;line-height:1.5;margin-top:4px;">Headquarters funding partner churches and franchise locations</div></div>
+        </div>
+        <div style="display:flex;gap:20px;align-items:flex-start;padding:20px 0;border-bottom:1px solid rgba(14,15,12,0.08);">
+          <div style="width:32px;height:32px;border-radius:50%;background:#163300;color:#E2F6D5;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0;">3</div>
+          <div><div style="display:flex;align-items:center;gap:10px;"><span style="font-weight:800;font-size:18px;color:#0E0F0C;">Missions</span><span style="background:#E2F6D5;color:#163300;border-radius:999px;padding:2px 10px;font-size:10px;font-weight:800;letter-spacing:0.06em;">PLATFORM</span></div><div style="font-weight:600;font-size:14px;color:#454745;line-height:1.5;margin-top:4px;">Disbursements to field teams and missionary payroll abroad</div></div>
+        </div>
+        <div style="display:flex;gap:20px;align-items:flex-start;padding:20px 0;">
+          <div style="width:32px;height:32px;border-radius:50%;background:#163300;color:#E2F6D5;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0;">4</div>
+          <div><div style="display:flex;align-items:center;gap:10px;"><span style="font-weight:800;font-size:18px;color:#0E0F0C;">Expansion</span><span style="background:#E2F6D5;color:#163300;border-radius:999px;padding:2px 10px;font-size:10px;font-weight:800;letter-spacing:0.06em;">PLATFORM</span></div><div style="font-weight:600;font-size:14px;color:#454745;line-height:1.5;margin-top:4px;">Building projects and new-country church plants</div></div>
+        </div>
+      </div>
+      <div style="flex:1;display:flex;align-items:center;justify-content:center;">
+        <div style="transform:scale(0.82);transform-origin:center;">
+          <div class="laptop">
+            <div class="laptop-screen-housing">
+              <div class="laptop-camera-strip"><div class="laptop-cam-dot"></div></div>
+              <div class="laptop-display">
+                <div style="height:32px;background:#163300;display:flex;align-items:center;padding:0 16px;">
+                  <div style="display:flex;align-items:center;gap:6px;"><div style="width:18px;height:18px;border-radius:50%;background:#E2F6D5;display:flex;align-items:center;justify-content:center;"><svg width="9" height="9" viewBox="0 0 16 16" fill="none"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="#163300" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span style="font-size:12px;font-weight:800;color:#E2F6D5;">ChurchPay</span></div>
+                </div>
+                <div style="padding:16px;">
+                  <div style="font-weight:800;font-size:13px;color:#0E0F0C;">Today's giving</div>
+                  <div style="font-weight:900;font-size:28px;color:#163300;font-variant-numeric:tabular-nums;">$94,247</div>
+                  <div style="color:#868685;font-size:11px;margin-top:2px;">from 38 countries</div>
+                  <div style="height:1px;background:rgba(14,15,12,0.08);margin:12px 0;"></div>
+                  <div style="display:flex;justify-content:space-between;padding:6px 0;font-size:11px;font-weight:600;"><span>🇳🇬 Adaeze · ₦25,000</span><span style="color:#163300;">→ $16</span></div>
+                  <div style="display:flex;justify-content:space-between;padding:6px 0;font-size:11px;font-weight:600;"><span>🇬🇧 Marcus · £200</span><span style="color:#163300;">→ $254</span></div>
+                  <div style="display:flex;justify-content:space-between;padding:6px 0;font-size:11px;font-weight:600;"><span>🇰🇪 Sarah · KES 8,000</span><span style="color:#163300;">→ $62</span></div>
+                  <div style="display:flex;justify-content:space-between;padding:6px 0;font-size:11px;font-weight:600;"><span>🇺🇸 James · $100</span><span style="color:#163300;">→ $100</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="laptop-base"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── SLIDE 8 — VISION ─── -->
+<div class="slide" data-dark="1" style="background:#163300;">
+  <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;padding:80px;text-align:center;">
+    <div class="label" style="color:#FFC091;">VISION</div>
+    <div style="font-size:clamp(36px,6vw,80px);font-weight:900;color:#E2F6D5;letter-spacing:-0.04em;line-height:0.88;margin-top:24px;">The financial backbone of faith.</div>
+    <div style="width:80px;height:3px;background:#FFC091;border-radius:999px;margin:28px auto;"></div>
+    <p style="max-width:640px;font-size:17px;color:rgba(226,246,213,0.65);font-weight:600;line-height:1.7;margin:0;">Faith looks niche from a horizontal lens. It's the same vertical fintech opportunity Toast captured in restaurants and Veeva captured in pharma — a $1.5T market with no incumbent owning the rail.</p>
+    <div style="display:flex;gap:20px;margin-top:64px;max-width:840px;width:100%;">
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(226,246,213,0.1);border-radius:24px;padding:32px;flex:1;text-align:center;">
+        <div style="color:#E2F6D5;opacity:0.4;text-transform:uppercase;font-weight:800;font-size:11px;letter-spacing:0.1em;">TAM</div>
+        <div style="font-size:52px;font-weight:900;color:#E2F6D5;font-variant-numeric:tabular-nums;letter-spacing:-0.04em;line-height:0.9;margin-top:12px;">$1.5T</div>
+        <div style="color:#E2F6D5;opacity:0.5;font-size:13px;font-weight:600;line-height:1.4;margin-top:10px;">annual global religious flow</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(226,246,213,0.1);border-radius:24px;padding:32px;flex:1;text-align:center;">
+        <div style="color:#E2F6D5;opacity:0.4;text-transform:uppercase;font-weight:800;font-size:11px;letter-spacing:0.1em;">SAM</div>
+        <div style="font-size:52px;font-weight:900;color:#E2F6D5;font-variant-numeric:tabular-nums;letter-spacing:-0.04em;line-height:0.9;margin-top:12px;">$135B</div>
+        <div style="color:#E2F6D5;opacity:0.5;font-size:13px;font-weight:600;line-height:1.4;margin-top:10px;">mid-to-large churches, 8 target markets</div>
+      </div>
+      <div style="background:rgba(255,192,145,0.08);border:1px solid rgba(255,192,145,0.2);border-radius:24px;padding:32px;flex:1;text-align:center;">
+        <div style="color:#E2F6D5;opacity:0.4;text-transform:uppercase;font-weight:800;font-size:11px;letter-spacing:0.1em;">SOM</div>
+        <div style="font-size:52px;font-weight:900;color:#FFC091;font-variant-numeric:tabular-nums;letter-spacing:-0.04em;line-height:0.9;margin-top:12px;">$210M</div>
+        <div style="color:#E2F6D5;opacity:0.5;font-size:13px;font-weight:600;line-height:1.4;margin-top:10px;">Year-5 ARR · 1,500 churches × 1% take</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── SLIDE 9 — TRACTION ─── -->
+<div class="slide" data-dark="0" style="background:#FBFBF9;">
+  <div style="padding:72px 80px 80px;height:100vh;display:flex;flex-direction:column;">
+    <div class="label" style="color:#868685;">TRACTION</div>
+    <div style="font-size:clamp(32px,5vw,60px);font-weight:900;color:#0E0F0C;letter-spacing:-0.03em;line-height:0.95;margin-top:8px;">This isn't a cold start.</div>
+    <div style="display:flex;margin-top:48px;border-top:1px solid rgba(14,15,12,0.08);border-bottom:1px solid rgba(14,15,12,0.08);padding:40px 0;">
+      <div style="flex:1;text-align:center;padding:0 40px;border-right:1px solid rgba(14,15,12,0.08);">
+        <div style="font-size:72px;font-weight:900;color:#163300;font-variant-numeric:tabular-nums;letter-spacing:-0.04em;line-height:0.9;">2M</div>
+        <div style="color:#868685;font-size:13px;font-weight:600;line-height:1.4;margin:12px auto 0;max-width:160px;">members on KingsPay, our founder's prior system</div>
+      </div>
+      <div style="flex:1;text-align:center;padding:0 40px;border-right:1px solid rgba(14,15,12,0.08);">
+        <div style="font-size:72px;font-weight:900;color:#163300;font-variant-numeric:tabular-nums;letter-spacing:-0.04em;line-height:0.9;">4 + 3</div>
+        <div style="color:#868685;font-size:13px;font-weight:600;line-height:1.4;margin:12px auto 0;max-width:160px;">signed LOIs plus 3 active — from flagship churches</div>
+      </div>
+      <div style="flex:1;text-align:center;padding:0 40px;border-right:1px solid rgba(14,15,12,0.08);">
+        <div style="font-size:72px;font-weight:900;color:#163300;font-variant-numeric:tabular-nums;letter-spacing:-0.04em;line-height:0.9;font-style:italic;">Live</div>
+        <div style="color:#868685;font-size:13px;font-weight:600;line-height:1.4;margin:12px auto 0;max-width:160px;">end-to-end prototype running today</div>
+      </div>
+      <div style="flex:1;text-align:center;padding:0 40px;">
+        <div style="font-size:72px;font-weight:900;color:#163300;font-variant-numeric:tabular-nums;letter-spacing:-0.04em;line-height:0.9;">Both</div>
+        <div style="color:#868685;font-size:13px;font-weight:600;line-height:1.4;margin:12px auto 0;max-width:160px;">signed by senior pastor AND finance director — mixed-buyer pull</div>
+      </div>
+    </div>
+    <div style="background:#163300;color:#E2F6D5;border-radius:20px;padding:32px;margin-top:48px;max-width:800px;position:relative;overflow:hidden;">
+      <div style="position:absolute;left:0;top:0;bottom:0;width:4px;background:#FFC091;border-radius:2px;"></div>
+      <p style="font-size:17px;font-weight:700;line-height:1.6;margin:0;padding-left:16px;">"The same engine already moved money for a 2M-member global church. The question was never whether this could work — it was whether someone would build it right."</p>
+    </div>
+  </div>
+</div>
+
+<!-- ─── SLIDE 10 — WHY WE WIN ─── -->
+<div class="slide" data-dark="1" style="background:#0E0F0C;">
+  <div style="padding:72px 80px;height:100vh;display:flex;flex-direction:column;">
+    <div class="label" style="color:#FFC091;">WHY WE WIN</div>
+    <div style="font-size:clamp(28px,4vw,52px);font-weight:900;color:#FBFBF9;letter-spacing:-0.03em;line-height:0.95;margin-top:16px;max-width:800px;">Others retrofit. We were built borderless from day one.</div>
+    <div style="margin-top:48px;max-width:1000px;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,0.07);">
+      <div style="display:flex;background:rgba(255,255,255,0.04);">
+        <div style="flex:2;padding:14px 24px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#868685;">FEATURE</div>
+        <div style="flex:2;padding:14px 24px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#868685;">INCUMBENTS</div>
+        <div style="flex:2;padding:14px 24px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#E2F6D5;border-left:2px solid #FFC091;">CHURCHPAY</div>
+      </div>
+      <div style="display:flex;border-bottom:1px solid rgba(255,255,255,0.05);"><div style="flex:2;padding:18px 24px;font-size:14px;font-weight:700;color:#FBFBF9;">Countries supported</div><div style="flex:2;padding:18px 24px;font-size:14px;font-weight:600;color:rgba(251,251,249,0.4);">1–5 countries</div><div style="flex:2;padding:18px 24px;font-size:14px;font-weight:700;color:#E2F6D5;border-left:2px solid rgba(255,192,145,0.1);">200+ countries</div></div>
+      <div style="display:flex;border-bottom:1px solid rgba(255,255,255,0.05);"><div style="flex:2;padding:18px 24px;font-size:14px;font-weight:700;color:#FBFBF9;">Settlement speed</div><div style="flex:2;padding:18px 24px;font-size:14px;font-weight:600;color:rgba(251,251,249,0.4);">1–5 days</div><div style="flex:2;padding:18px 24px;font-size:14px;font-weight:700;color:#E2F6D5;border-left:2px solid rgba(255,192,145,0.1);">Seconds</div></div>
+      <div style="display:flex;border-bottom:1px solid rgba(255,255,255,0.05);"><div style="flex:2;padding:18px 24px;font-size:14px;font-weight:700;color:#FBFBF9;">Donor attribution</div><div style="flex:2;padding:18px 24px;font-size:14px;font-weight:600;color:rgba(251,251,249,0.4);">Partial or none</div><div style="flex:2;padding:18px 24px;font-size:14px;font-weight:700;color:#E2F6D5;border-left:2px solid rgba(255,192,145,0.1);">Every gift, automatic</div></div>
+      <div style="display:flex;border-bottom:1px solid rgba(255,255,255,0.05);"><div style="flex:2;padding:18px 24px;font-size:14px;font-weight:700;color:#FBFBF9;">FX fees</div><div style="flex:2;padding:18px 24px;font-size:14px;font-weight:600;color:rgba(251,251,249,0.4);">6–13%</div><div style="flex:2;padding:18px 24px;font-size:14px;font-weight:700;color:#E2F6D5;border-left:2px solid rgba(255,192,145,0.1);">Mid-market rate</div></div>
+      <div style="display:flex;"><div style="flex:2;padding:18px 24px;font-size:14px;font-weight:700;color:#FBFBF9;">Built for faith</div><div style="flex:2;padding:18px 24px;font-size:14px;font-weight:600;color:rgba(251,251,249,0.4);">Afterthought</div><div style="flex:2;padding:18px 24px;font-size:14px;font-weight:700;color:#E2F6D5;border-left:2px solid rgba(255,192,145,0.1);">Day one</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── SLIDE 11 — TAILWINDS ─── -->
+<div class="slide" data-dark="0" style="background:#FBFBF9;">
+  <div style="padding:72px 80px 80px;height:100vh;display:flex;flex-direction:column;">
+    <div class="label" style="color:#868685;">TAILWINDS</div>
+    <div style="font-size:clamp(32px,5vw,60px);font-weight:900;color:#0E0F0C;letter-spacing:-0.03em;line-height:0.95;margin-top:8px;">The waves we're riding.</div>
+    <div style="display:flex;gap:20px;margin-top:40px;flex:1;">
+      <div style="background:#163300;border-radius:24px;padding:40px;flex:1;display:flex;flex-direction:column;">
+        <div style="font-size:80px;font-weight:900;color:#E2F6D5;opacity:0.12;line-height:1;font-variant-numeric:tabular-nums;">01</div>
+        <div style="font-weight:900;font-size:22px;color:#E2F6D5;margin-top:8px;">The church became a global product</div>
+        <p style="color:rgba(226,246,213,0.65);font-size:14px;font-weight:600;line-height:1.65;margin-top:12px;flex:1;">Top services stream to 50–60 countries every Sunday. The audience is borderless; the giving rail is not.</p>
+        <div style="background:rgba(226,246,213,0.1);border:1px solid rgba(226,246,213,0.15);border-radius:999px;padding:6px 16px;font-size:12px;font-weight:700;color:#E2F6D5;display:inline-block;margin-top:16px;align-self:flex-start;">50–60 countries per service</div>
+      </div>
+      <div style="background:#E2F6D5;border-radius:24px;padding:40px;flex:1;display:flex;flex-direction:column;">
+        <div style="font-size:80px;font-weight:900;color:#163300;opacity:0.12;line-height:1;font-variant-numeric:tabular-nums;">02</div>
+        <div style="font-size:64px;font-weight:900;color:#163300;font-variant-numeric:tabular-nums;line-height:1;margin-top:4px;">49%</div>
+        <div style="font-weight:900;font-size:22px;color:#163300;margin-top:8px;">Giving went cashless</div>
+        <p style="color:#454745;font-size:14px;font-weight:600;line-height:1.65;margin-top:12px;flex:1;">Of U.S. church giving is now made by card. The behaviour moved online — it just can't cross a border yet.</p>
+      </div>
+      <div style="background:#0E0F0C;border-radius:24px;padding:40px;flex:1;display:flex;flex-direction:column;">
+        <div style="font-size:80px;font-weight:900;color:#FFC091;opacity:0.12;line-height:1;font-variant-numeric:tabular-nums;">03</div>
+        <div style="font-weight:900;font-size:22px;color:#FBFBF9;margin-top:8px;">The rails finally caught up</div>
+        <p style="color:rgba(251,251,249,0.6);font-size:14px;font-weight:600;line-height:1.65;margin-top:12px;flex:1;">Any currency can now be accepted, converted, and settled instantly at near-zero cost. The infrastructure bottleneck is gone.</p>
+        <div style="background:rgba(255,192,145,0.08);border:1px solid rgba(255,192,145,0.2);border-radius:999px;padding:6px 16px;font-size:12px;font-weight:700;color:#FFC091;display:inline-block;margin-top:16px;align-self:flex-start;">Cross-border settlement is now sub-cent</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── SLIDE 12 — TIMING ─── -->
+<div class="slide" data-dark="1" style="background:#163300;">
+  <div style="padding:72px 80px;height:100vh;display:flex;flex-direction:column;justify-content:center;">
+    <div class="label" style="color:#FFC091;">TIMING</div>
+    <div style="font-size:clamp(32px,5vw,58px);font-weight:900;color:#E2F6D5;letter-spacing:-0.03em;line-height:0.95;max-width:700px;margin-top:16px;">The missing rail finally exists.</div>
+    <p style="margin-top:24px;max-width:640px;font-size:17px;color:rgba(226,246,213,0.65);font-weight:600;line-height:1.7;">For 50 years the church had no way to move money across a border instantly and cheaply. As of 2024–25, the rails to support cross-border, any-currency settlement at near-zero cost have finally caught up — while church giving has gone 49% cashless. That window is open now.</p>
+    <div style="margin-top:64px;max-width:900px;position:relative;">
+      <div style="height:2px;background:rgba(226,246,213,0.15);width:100%;position:relative;">
+        <div style="position:absolute;height:2px;right:0;width:55%;background:rgba(255,192,145,0.5);"></div>
+      </div>
+      <div style="position:relative;display:flex;justify-content:space-between;margin-top:-7px;">
+        <div style="display:flex;flex-direction:column;align-items:center;">
+          <div style="width:14px;height:14px;border-radius:50%;background:#E2F6D5;"></div>
+          <div style="margin-top:12px;text-align:center;">
+            <div style="color:#E2F6D5;opacity:0.4;font-size:11px;font-weight:700;">2015</div>
+            <div style="color:#E2F6D5;opacity:0.7;font-weight:700;font-size:13px;margin-top:4px;">Giving goes digital</div>
+            <div style="color:#E2F6D5;opacity:0.4;font-size:12px;margin-top:2px;max-width:130px;">49% of U.S. church giving moves online</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;">
+          <div style="width:14px;height:14px;border-radius:50%;background:#E2F6D5;"></div>
+          <div style="margin-top:12px;text-align:center;">
+            <div style="color:#E2F6D5;opacity:0.4;font-size:11px;font-weight:700;">2022</div>
+            <div style="color:#E2F6D5;opacity:0.7;font-weight:700;font-size:13px;margin-top:4px;">Stablecoin rails scale</div>
+            <div style="color:#E2F6D5;opacity:0.4;font-size:12px;margin-top:2px;">$250B+ stablecoin supply</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;">
+          <div style="position:relative;width:18px;height:18px;">
+            <div style="position:absolute;inset:-4px;border-radius:50%;border:2px solid rgba(255,192,145,0.3);"></div>
+            <div style="width:18px;height:18px;border-radius:50%;background:#FFC091;"></div>
+          </div>
+          <div style="margin-top:12px;text-align:center;">
+            <div style="color:#FFC091;font-size:11px;font-weight:700;">2025</div>
+            <div style="font-weight:900;font-size:16px;color:#FFC091;margin-top:4px;">THE WINDOW</div>
+            <div style="color:#E2F6D5;opacity:0.7;font-size:12px;margin-top:2px;">ChurchPay</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── SLIDE 13 — FOUNDER-MARKET FIT ─── -->
+<div class="slide" data-dark="0" style="background:#FBFBF9;">
+  <div style="padding:64px 80px 80px;height:100vh;display:flex;flex-direction:column;">
+    <div class="label" style="color:#868685;">FOUNDER-MARKET FIT</div>
+    <div style="font-size:clamp(32px,4vw,52px);font-weight:900;color:#0E0F0C;letter-spacing:-0.03em;line-height:0.95;margin-top:8px;">Why this is ours to build.</div>
+    <div style="display:flex;gap:28px;margin-top:40px;flex:1;">
+      <div style="background:#163300;border-radius:28px;padding:48px;flex:1;display:flex;flex-direction:column;">
+        <img src="/ola.jpg" alt="Olayinka" style="width:96px;height:96px;border-radius:50%;object-fit:cover;object-position:center top;border:3px solid #E2F6D5;" onerror="this.style.display='none'">
+        <div style="font-weight:900;font-size:20px;color:#E2F6D5;margin-top:20px;">Olayinka Akinhanmi</div>
+        <div style="color:#E2F6D5;opacity:0.55;font-size:13px;font-weight:600;margin-top:4px;">Co-founder &amp; CEO · Product</div>
+        <div style="height:1px;background:rgba(226,246,213,0.15);margin:24px 0;"></div>
+        <p style="color:#E2F6D5;opacity:0.8;font-size:15px;font-weight:600;line-height:1.7;flex:1;margin:0;">Built and ran KingsPay's payment ecosystem for a 2M-member global church. He didn't read about givers being turned away at the border. He watched it happen every Sunday and built the fix.</p>
+        <div style="color:#E2F6D5;opacity:0.3;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-top:24px;">Product · Engineering · Operations</div>
+      </div>
+      <div style="background:#0E0F0C;border-radius:28px;padding:48px;flex:1;display:flex;flex-direction:column;">
+        <img src="/obi.jpeg" alt="Obiaka" style="width:96px;height:96px;border-radius:50%;object-fit:cover;object-position:center top;border:3px solid rgba(255,255,255,0.15);" onerror="this.style.display='none'">
+        <div style="font-weight:900;font-size:20px;color:#FBFBF9;margin-top:20px;">Obiaka Emeka</div>
+        <div style="color:rgba(251,251,249,0.45);font-size:13px;font-weight:600;margin-top:4px;">Co-founder · Liquidity &amp; Risk</div>
+        <div style="height:1px;background:rgba(255,255,255,0.08);margin:24px 0;"></div>
+        <p style="color:rgba(251,251,249,0.75);font-size:15px;font-weight:600;line-height:1.7;flex:1;margin:0;">14 years at Goldman Sachs moving sovereign debt, FX, and institutional capital across emerging markets. Runs Voltech Capital LP. Knows exactly how to move money across borders safely and at scale.</p>
+        <div style="color:rgba(251,251,249,0.25);font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-top:24px;">Liquidity · Risk · Capital Markets</div>
+      </div>
+    </div>
+    <p style="text-align:center;font-style:italic;color:#868685;font-size:15px;font-weight:700;margin-top:28px;">One of us lived the customer pain. The other understands how to move money safely at scale.</p>
+  </div>
+</div>
+
+<!-- ─── SLIDE 14 — THE ASK ─── -->
+<div class="slide" data-dark="1" style="background:#0E0F0C;position:relative;">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 50% 40% at 50% 45%,rgba(226,246,213,0.03) 0%,transparent 70%);pointer-events:none;"></div>
+  <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;text-align:center;padding:80px;">
+    <div class="label" style="color:#FFC091;">THE ASK</div>
+    <div style="font-size:clamp(100px,18vw,180px);font-weight:900;color:#E2F6D5;font-variant-numeric:tabular-nums;letter-spacing:-0.05em;line-height:0.85;margin-top:20px;">$3M</div>
+    <div style="color:#E2F6D5;opacity:0.4;font-size:18px;font-weight:700;margin-top:16px;">Pre-seed round</div>
+    <div style="width:60px;height:3px;background:#FFC091;border-radius:999px;margin:36px auto;"></div>
+    <div style="display:flex;flex-direction:column;gap:12px;align-items:center;width:100%;">
+      <div style="background:rgba(226,246,213,0.04);border:1px solid rgba(226,246,213,0.1);border-radius:14px;padding:14px 24px;max-width:520px;width:100%;text-align:left;display:flex;gap:16px;align-items:center;"><div style="width:28px;height:28px;border-radius:50%;background:rgba(226,246,213,0.08);color:#E2F6D5;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</div><span style="color:#E2F6D5;opacity:0.75;font-size:15px;font-weight:600;">Launch the product and process first real cross-border donation volume</span></div>
+      <div style="background:rgba(226,246,213,0.04);border:1px solid rgba(226,246,213,0.1);border-radius:14px;padding:14px 24px;max-width:520px;width:100%;text-align:left;display:flex;gap:16px;align-items:center;"><div style="width:28px;height:28px;border-radius:50%;background:rgba(226,246,213,0.08);color:#E2F6D5;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</div><span style="color:#E2F6D5;opacity:0.75;font-size:15px;font-weight:600;">Convert signed LOIs into live churches across 8 target markets</span></div>
+      <div style="background:rgba(226,246,213,0.04);border:1px solid rgba(226,246,213,0.1);border-radius:14px;padding:14px 24px;max-width:520px;width:100%;text-align:left;display:flex;gap:16px;align-items:center;"><div style="width:28px;height:28px;border-radius:50%;background:rgba(226,246,213,0.08);color:#E2F6D5;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</div><span style="color:#E2F6D5;opacity:0.75;font-size:15px;font-weight:600;">Reach $50M+ in annualized giving volume on the platform</span></div>
+      <div style="background:rgba(226,246,213,0.04);border:1px solid rgba(226,246,213,0.1);border-radius:14px;padding:14px 24px;max-width:520px;width:100%;text-align:left;display:flex;gap:16px;align-items:center;"><div style="width:28px;height:28px;border-radius:50%;background:rgba(226,246,213,0.08);color:#E2F6D5;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">4</div><span style="color:#E2F6D5;opacity:0.75;font-size:15px;font-weight:600;">Arrive at our Series A with proven take-rate and a defensible giver network</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── SLIDE 15 — PROOF POINT ─── -->
+<div class="slide" data-dark="0" style="background:#FBFBF9;">
+  <div style="padding:64px 80px 80px;height:100vh;display:flex;flex-direction:column;">
+    <div class="label" style="color:#868685;">PROOF POINT</div>
+    <div style="font-size:clamp(32px,5vw,58px);font-weight:900;color:#0E0F0C;letter-spacing:-0.03em;line-height:0.95;margin-top:8px;">The intent is already there.</div>
+    <div style="background:#163300;border-radius:30px;padding:60px;max-width:840px;margin:40px auto 0;position:relative;overflow:hidden;width:100%;">
+      <div style="position:absolute;right:-20px;bottom:-30px;font-size:200px;font-weight:900;color:rgba(255,255,255,0.03);user-select:none;line-height:1;pointer-events:none;">LOI</div>
+      <div style="display:inline-block;background:#FFC091;color:#0E0F0C;border-radius:999px;padding:6px 16px;font-size:12px;font-weight:800;margin-bottom:28px;">SIGNED LOI</div>
+      <div style="font-weight:900;font-size:26px;color:#E2F6D5;line-height:1.2;">Flagship church · [N] weekly international viewers</div>
+      <p style="color:#E2F6D5;opacity:0.7;font-size:16px;font-weight:600;line-height:1.7;margin-top:20px;">Already signed a Letter of Intent. That gives us an anchor customer and a path into its broader denomination network — hundreds of affiliate churches sharing the same polity, audit, and banking infrastructure.</p>
+      <div style="display:flex;gap:16px;margin-top:32px;">
+        <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(226,246,213,0.12);border-radius:14px;padding:16px 24px;display:flex;align-items:center;gap:10px;"><div style="width:8px;height:8px;border-radius:50%;background:#4ade80;flex-shrink:0;"></div><span style="color:#E2F6D5;font-weight:700;font-size:14px;">Anchor LOI signed</span></div>
+        <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(226,246,213,0.12);border-radius:14px;padding:16px 24px;display:flex;align-items:center;gap:10px;"><div style="width:8px;height:8px;border-radius:50%;background:#4ade80;flex-shrink:0;"></div><span style="color:#E2F6D5;font-weight:700;font-size:14px;">Path to 200–5,000 affiliate churches</span></div>
+      </div>
+    </div>
+    <p style="font-style:italic;color:#868685;font-size:13px;text-align:center;margin-top:16px;">Placeholder to fill before sending.</p>
+  </div>
+</div>
+
+<!-- ─── SLIDE 16 — CALL TO ACTION ─── -->
+<div class="slide" data-dark="1" style="background:#163300;position:relative;overflow:hidden;">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 40% 50%,rgba(226,246,213,0.06) 0%,transparent 70%);pointer-events:none;"></div>
+  <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;text-align:center;padding:80px;">
+    <!-- Logo -->
+    <div style="display:flex;align-items:center;gap:14px;">
+      <div style="width:48px;height:48px;border-radius:50%;background:#E2F6D5;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="22" height="22" viewBox="0 0 16 16" fill="none"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="#163300" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <span style="font-size:26px;font-weight:800;color:#E2F6D5;letter-spacing:-0.02em;">ChurchPay</span>
+    </div>
+    <div style="margin-top:56px;max-width:800px;">
+      <div style="font-size:clamp(32px,5vw,64px);font-weight:900;color:#E2F6D5;letter-spacing:-0.04em;line-height:0.9;">We're building the rail</div>
+      <div style="font-size:clamp(32px,5vw,64px);font-weight:900;color:#E2F6D5;letter-spacing:-0.04em;line-height:0.9;">for the one donation</div>
+      <div style="font-size:clamp(32px,5vw,64px);font-weight:900;color:rgba(226,246,213,0.4);letter-spacing:-0.04em;line-height:0.9;">most systems still can't process.</div>
+    </div>
+    <p style="margin-top:32px;max-width:520px;font-size:17px;color:rgba(226,246,213,0.6);font-weight:600;line-height:1.7;">We're raising $3M. If you want to see the product, talk through the wedge, or pressure-test the business model — let's talk.</p>
+    <div style="display:flex;gap:14px;justify-content:center;margin-top:48px;">
+      <button style="background:#E2F6D5;color:#163300;height:54px;padding:0 36px;border-radius:999px;font-size:16px;font-weight:800;border:none;cursor:pointer;font-family:inherit;">Schedule a call</button>
+      <button style="background:transparent;color:#E2F6D5;height:54px;padding:0 36px;border-radius:999px;font-size:15px;font-weight:700;border:1.5px solid rgba(226,246,213,0.25);cursor:pointer;font-family:inherit;">hello@churchpay.com</button>
+    </div>
+  </div>
+  <div style="position:absolute;bottom:40px;left:0;right:0;display:flex;justify-content:center;gap:32px;">
+    <span style="color:#E2F6D5;opacity:0.35;font-size:13px;">Olayinka Akinhanmi · Obiaka Emeka</span>
+    <span style="color:#E2F6D5;opacity:0.15;">·</span>
+    <span style="color:#E2F6D5;opacity:0.35;font-size:13px;">hello@churchpay.com</span>
+  </div>
+</div>
+
+</div><!-- /deck -->
+
+<!-- ─── NAV BAR ─── -->
+<div class="nav-bar dark" id="navBar">
+  <span class="nav-title dark" id="navTitle">Title</span>
+  <div class="nav-dots">
+    <div class="dots-row" id="dotsRow"></div>
+    <span class="nav-counter" id="navCounter" style="color:rgba(226,246,213,0.35);">1 / 16</span>
+  </div>
+  <div class="nav-btns">
+    <button class="nav-btn" id="btnPrev" onclick="goPrev()" style="background:rgba(226,246,213,0.08);color:#E2F6D5;">←</button>
+    <button class="nav-btn" id="btnNext" onclick="goNext()" style="background:rgba(226,246,213,0.08);color:#E2F6D5;">→</button>
+  </div>
+</div>
+
+<!-- PDF button (hidden in print) -->
+<button class="no-print" onclick="window.print()" style="
+  position:fixed;top:16px;right:16px;z-index:300;
+  background:#E2F6D5;color:#163300;border:none;cursor:pointer;
+  padding:8px 18px;border-radius:999px;font-size:12px;font-weight:700;
+  font-family:'Geist',system-ui,sans-serif;
+  box-shadow:0 4px 16px rgba(0,0,0,0.2);
+">⬇ Save as PDF</button>
+
+<script>
+const SLIDES = [
+  {title:"Title",dark:true},{title:"Who We Are",dark:false},{title:"The Problem",dark:true},
+  {title:"Use Cases",dark:false},{title:"Our Solution",dark:false},{title:"How It Works",dark:true},
+  {title:"The Platform",dark:false},{title:"Vision",dark:true},{title:"Traction",dark:false},
+  {title:"Why We Win",dark:true},{title:"Tailwinds",dark:false},{title:"Timing",dark:true},
+  {title:"Founder-Market Fit",dark:false},{title:"The Ask",dark:true},{title:"Proof Point",dark:false},
+  {title:"Call to Action",dark:true},
+];
+
+let current = 0;
+const slides = document.querySelectorAll('.slide');
+const navBar = document.getElementById('navBar');
+const navTitle = document.getElementById('navTitle');
+const navCounter = document.getElementById('navCounter');
+const dotsRow = document.getElementById('dotsRow');
+const btnPrev = document.getElementById('btnPrev');
+const btnNext = document.getElementById('btnNext');
+
+// Build dots
+SLIDES.forEach((_, i) => {
+  const d = document.createElement('div');
+  d.className = 'dot';
+  d.id = 'dot'+i;
+  dotsRow.appendChild(d);
+});
+
+function update() {
+  const s = SLIDES[current];
+  const dark = s.dark;
+  // Nav styling
+  navBar.className = 'nav-bar ' + (dark ? 'dark' : 'light');
+  navTitle.className = 'nav-title ' + (dark ? 'dark' : 'light');
+  navTitle.textContent = s.title;
+  navCounter.textContent = (current+1) + ' / ' + SLIDES.length;
+  navCounter.style.color = dark ? 'rgba(226,246,213,0.35)' : '#868685';
+  // Btn colors
+  btnPrev.style.background = dark ? 'rgba(226,246,213,0.08)' : 'rgba(14,15,12,0.06)';
+  btnPrev.style.color = dark ? '#E2F6D5' : '#0E0F0C';
+  btnNext.style.background = dark ? 'rgba(226,246,213,0.08)' : 'rgba(14,15,12,0.06)';
+  btnNext.style.color = dark ? '#E2F6D5' : '#0E0F0C';
+  btnPrev.disabled = current === 0;
+  btnNext.disabled = current === SLIDES.length - 1;
+  // Slides
+  slides.forEach((el, i) => {
+    el.classList.remove('active','behind');
+    if (i === current) el.classList.add('active');
+    else if (i < current) el.classList.add('behind');
+  });
+  // Dots
+  SLIDES.forEach((_, i) => {
+    const d = document.getElementById('dot'+i);
+    d.classList.toggle('active-dot', i === current);
+    d.style.width = i === current ? '10px' : '5px';
+    d.style.height = i === current ? '10px' : '5px';
+    const active = dark ? '#E2F6D5' : '#163300';
+    const inactive = dark ? 'rgba(226,246,213,0.2)' : 'rgba(14,15,12,0.15)';
+    d.style.background = i === current ? active : inactive;
+  });
+}
+
+function goNext() { if (current < SLIDES.length-1) { current++; update(); } }
+function goPrev() { if (current > 0) { current--; update(); } }
+
+document.addEventListener('keydown', e => {
+  if (e.key==='ArrowRight'||e.key==='ArrowDown') goNext();
+  if (e.key==='ArrowLeft'||e.key==='ArrowUp') goPrev();
+});
+
+update();
+</script>
+</body>
+</html>
